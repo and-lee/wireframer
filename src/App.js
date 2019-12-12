@@ -10,7 +10,6 @@ import LoginScreen from './components/login_screen/LoginScreen.js';
 import HomeScreen from './components/home_screen/HomeScreen.js';
 import DatabaseTester from './test/DatabaseTester'
 import EditScreen from './components/edit_screen/EditScreen.js'; 
-//wireframe/:id/:controlid
 
 class App extends Component {
   render() {

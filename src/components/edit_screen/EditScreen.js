@@ -9,7 +9,6 @@ import { getFirestore } from 'redux-firestore';
 class EditScreen extends Component {
     state = {
         name: '',
-        owner: '',
     }
 
     handleChange = (e) => {
@@ -21,7 +20,7 @@ class EditScreen extends Component {
         }));
 
         // update database
-        this.props.firestore.collection("todoLists").doc(this.props.todoList.id).update( {
+        this.props.firestore.collection("wireframes").doc(this.props.wireframe.id).update( {
             [target.id] : target.value
         });
     }
@@ -36,6 +35,7 @@ class EditScreen extends Component {
     render() {
         const auth = this.props.auth;
         const wireframe = this.props.wireframe;
+        console.log(wireframe); ///
         if (!auth.uid) {
             return <Redirect to="/" />;
         }
@@ -43,8 +43,32 @@ class EditScreen extends Component {
         return (
             <div className="row">
                 
-                <div className="col s2">
-                    {wireframe.name}
+                <div className="col s3">
+                    <div className="input-field">
+                        <label htmlFor="email" className="active">Name</label>
+                        <input type="text" name="name" id="name" onChange={this.handleChange} value={wireframe.name} />
+                    </div>
+                    <div>Controls</div>
+
+                </div>
+
+                <div className="col s6">
+                    <div>
+
+                    </div>
+                </div>
+
+                <div className="col s3">
+                    <div className="row">
+                        <div className="col s1 card">
+                            Test
+
+                        </div>
+                        ZOOM+ ZOOM- Save Close
+
+                    </div>
+                    <div>Properties</div>
+
                 </div>
                 
             </div>
