@@ -46,8 +46,8 @@ class WireframeCard extends React.Component {
                                 <button className="btn waves-effect waves-light grey lighten-1 z-depth-0 modal-close">No</button>
                             </div>
                         }>
-                            <p> Are you sure you want to delete this wireframe? </p>
-                            <div>The wireframe will not be retreivable.</div>
+                            <p> Are you sure you want to delete this diagram? </p>
+                            <div>The diagram will not be retreivable.</div>
                     </Modal>
 
 
