@@ -120,3 +120,21 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   float: right;
   right: 0!important;
 }
+.delete_card_button {
+  color: #424242;
+  padding: 0!important;
+}
+.link_header {
+  font-size: 36pt;
+  color: #424242;
+  padding-top: 40px;
+}
+.link_card_container {
+  margin-left: 0!important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.link_card {
+  padding: 0!important;
+}

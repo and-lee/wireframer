@@ -32,6 +32,7 @@ class HomeScreen extends Component {
             <div className="dashboard container">
                 <div className="row">
                     <div className="col s12 m4">
+                        <div className="link_header">Recent Work</div>
                         <WireframeLinks />
                     </div>
 
@@ -43,8 +44,8 @@ class HomeScreen extends Component {
                         
                         <div className="home_new_list_container">
                                 <button className="home_new_list_button waves-effect waves-light btn-large" onClick={this.handleNewList}>
-                                    <i className="largeIcon material-icons right">format_shapes</i>
-                                    Create a New Wireframe
+                                    <i className="largeIcon material-icons right">add</i>
+                                    Create New Wireframe
                                 </button>
                         </div>
                     </div>

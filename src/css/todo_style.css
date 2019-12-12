@@ -33,13 +33,13 @@ div.banner {
 }
 
 .home_new_list_button {
-  font-size: 30pt;
+  font-size: 32pt;
 }
 .home_new_list_button:hover {
   box-shadow: 1px 2px;
 }
 
-.card-title, .card, .info, h4, h5, .nav-wrapper, .listheader, .banner, .input-field > label, .statusLabel, #modal-0 {
+.card-title, .card, .info, .link_header, h4, h5, .nav-wrapper, .listheader, .banner, .input-field > label, .statusLabel, #modal-0 {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
