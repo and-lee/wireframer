@@ -44,7 +44,7 @@ class EditScreen extends Component {
             <div className="row">
                 
                 <div className="col s2">
-                    
+                    {wireframe.name}
                 </div>
                 
             </div>

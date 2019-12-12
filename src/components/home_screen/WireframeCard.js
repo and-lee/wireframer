@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getFirestore } from 'redux-firestore';
+import Modal from 'react-materialize/lib/Modal';
 
 class WireframeCard extends React.Component {
 
-    handleDelete = (e) => {
+    handleDelete = () => {
+        const fireStore = getFirestore();
+        fireStore.collection('wireframes').doc(this.props.wireframe.id).delete();
         console.log("Deleted Wireframe: "+this.props.wireframe.id);
-        e.preventDefault();
     }
 
     handleOnClick = (id) => { // order - push list to top
@@ -33,9 +35,23 @@ class WireframeCard extends React.Component {
                     </Link>
                 </div>
 
-                <div className="col s2 delete_card_button" >
-                    <i className="medium material-icons" onClick={e=>this.handleDelete(e)}>clear</i>
-                    </div>
+                <div className="col s2 link_card" >
+                    <Modal className="delete_modal" header="Delete Wireframe"
+                        trigger={<i className="delete_card_button medium material-icons">clear</i>}
+                        options={{dismissible: false}}
+                        actions={
+                            <div>
+                                <button className="btn waves-effect waves-light z-depth-0" onClick={this.handleDelete}>Yes</button>
+                                &nbsp;
+                                <button className="btn waves-effect waves-light grey lighten-1 z-depth-0 modal-close">No</button>
+                            </div>
+                        }>
+                            <p> Are you sure you want to delete this wireframe? </p>
+                            <div>The wireframe will not be retreivable.</div>
+                    </Modal>
+
+
+                </div>
 
             </div>
         );
