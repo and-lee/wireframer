@@ -1,0 +1,170 @@
+{
+    "wireframes": [
+        {
+            "key": 0,
+            "name": "My First Page UWU",
+            "owner": "mCA8qYXmjARW4AFKNOqJwstutDH2",
+            "controls": [
+                {
+                    "key": 0,
+                    "type": "container",
+                    "width": 500,
+                    "height": 500,
+                    "position": [0,0],
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#000000",
+                    "borderWeight": 2,
+                    "borderRadius": 2
+                },
+                {
+                    "key": 1,
+                    "type": "button",
+                    "width": 100,
+                    "height": 20,
+                    "position": [20,20],
+                    "text": "Press 4 Cake",
+                    "fontSize": 12,
+                    "textColor": "#000000",
+                    "backgroundColor": "#d6d6d6",
+                    "borderColor": "#000000",
+                    "borderWeight": 2,
+                    "borderRadius": 2
+                }
+            ]
+        },
+        {
+            "key": 1,
+            "name": "My Homepage",
+            "owner": "jOVikZ5TlLRmQPgfFADhDtsRhx13",
+            "controls": [
+                {
+                    "key": 0,
+                    "type": "container",
+                    "width": "1920",
+                    "height": "1080",
+                    "position": [0,0],
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#000000",
+                    "borderWeight": 2,
+                    "borderRadius": 2
+                },
+                {
+                    "key": 1,
+                    "type": "label",
+                    "width": 100,
+                    "height": 24,
+                    "position": [30,30],
+                    "text": "Welcome!",
+                    "fontSize": 24,
+                    "textColor": "#000000",
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#ffffff",
+                    "borderWeight": 0,
+                    "borderRadius": 0
+                },
+                {
+                    "key": 2,
+                    "type": "textfield",
+                    "width": 150,
+                    "height": 20,
+                    "position": [30,50],
+                    "text": "Contact Info",
+                    "fontSize": 14,
+                    "textColor": "#d6d6d6",
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#000000",
+                    "borderWeight": 2,
+                    "borderRadius": 2
+                },
+                {
+                    "key": 3,
+                    "type": "button",
+                    "width": 100,
+                    "height": 20,
+                    "position": [20,100],
+                    "text": "Submit",
+                    "fontSize": 14,
+                    "textColor": "#000000",
+                    "backgroundColor": "#d6d6d6",
+                    "borderColor": "#000000",
+                    "borderWeight": 2,
+                    "borderRadius": 2
+                }
+            ]
+        },
+        {
+            "key": 2,
+            "name": "Sandbox Testpage",
+            "owner": "jOVikZ5TlLRmQPgfFADhDtsRhx13",
+            "controls": [
+                {
+                    "key": 0,
+                    "type": "container",
+                    "width": "1920",
+                    "height": "1080",
+                    "position": [0,0],
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#000000",
+                    "borderWeight": 2,
+                    "borderRadius": 2
+                },
+                {
+                    "key": 1,
+                    "type": "label",
+                    "width": 100,
+                    "height": 24,
+                    "position": [30,30],
+                    "text": "Shopping List",
+                    "fontSize": 24,
+                    "textColor": "#000000",
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#ffffff",
+                    "borderWeight": 0,
+                    "borderRadius": 0
+                },
+                {
+                    "key": 2,
+                    "type": "label",
+                    "width": 100,
+                    "height": 14,
+                    "position": [30,50],
+                    "text": "Milk",
+                    "fontSize": 14,
+                    "textColor": "#000000",
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#ffffff",
+                    "borderWeight": 0,
+                    "borderRadius": 0
+                },
+                {
+                    "key": 3,
+                    "type": "label",
+                    "width": 100,
+                    "height": 14,
+                    "position": [30,70],
+                    "text": "Eggs",
+                    "fontSize": 14,
+                    "textColor": "#000000",
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#ffffff",
+                    "borderWeight": 0,
+                    "borderRadius": 0
+                },
+                {
+                    "key": 4,
+                    "type": "label",
+                    "width": 100,
+                    "height": 14,
+                    "position": [30,90],
+                    "text": "Sugar",
+                    "fontSize": 14,
+                    "textColor": "#000000",
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#ffffff",
+                    "borderWeight": 0,
+                    "borderRadius": 0
+                }
+            ]
+        }
+    ]
+}
