@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { NavLink, Redirect } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
-import TodoListLinks from './TodoListLinks'
+import WireframeLinks from './WireframeLinks'
 import { getFirestore } from 'redux-firestore';
 
 class HomeScreen extends Component {
@@ -12,14 +12,13 @@ class HomeScreen extends Component {
         let time = new Date().getTime();
 
         const fireStore = getFirestore();
-        fireStore.collection('todoLists').add({
+        fireStore.collection('wireframes').add({
             name: "",
-            owner: "",
-            items: [],
+            owner: this.props.auth.uid, // current user.id
+            controls: [],
             time: time,
-            sortCriteria: "",
         }).then(ref => {
-            this.props.history.push("/todolist/" + ref.id);
+            this.props.history.push("/wireframe/" + ref.id);
         });
 
     }
@@ -33,19 +32,19 @@ class HomeScreen extends Component {
             <div className="dashboard container">
                 <div className="row">
                     <div className="col s12 m4">
-                        <TodoListLinks />
+                        <WireframeLinks />
                     </div>
 
                     <div className="col s8">
                         <div className="banner">
-                            @todo<br />
-                            List Maker
+                            Wireframer™<br />
+                            A Wireframe Maker
                         </div>
                         
                         <div className="home_new_list_container">
                                 <button className="home_new_list_button waves-effect waves-light btn-large" onClick={this.handleNewList}>
-                                    <i className="largeIcon material-icons right">format_list_bulleted</i>
-                                    Create a New To Do List
+                                    <i className="largeIcon material-icons right">format_shapes</i>
+                                    Create a New Wireframe
                                 </button>
                         </div>
                     </div>
@@ -64,6 +63,6 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-      { collection: 'todoLists', orderBy: ['time', 'desc']},
+      { collection: 'wireframes', orderBy: ['time', 'desc']},
     ]),
 )(HomeScreen);
