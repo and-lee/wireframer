@@ -170,7 +170,7 @@ class EditScreen extends Component {
 
                     <div className="col s6">
                         <div className="wireframe_container">
-                            <div className="diagram" style={{width: wireframe.width, height: wireframe.height}}>
+                            <div className="diagram" style={{width: wireframe.width+"px", height: wireframe.height+"px"}}>
                                 <WireframeDisplay wireframe={wireframe} />
                             </div>
                         </div>
