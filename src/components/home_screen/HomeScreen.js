@@ -3,18 +3,39 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { NavLink, Redirect } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
-import WireframeLinks from './WireframeLinks'
+import WireframeLinks from './WireframeLinks';
 import { getFirestore } from 'redux-firestore';
 
 class HomeScreen extends Component {
+
+    /*newKey() {
+        const fireStore = getFirestore();
+        
+        let test = this.props.wireframes;
+
+        fireStore.collection("wireframes").get().then(function(querySnapshot) {
+            let test = querySnapshot;
+            console.log(test);
+            let len = (querySnapshot.size);
+            for(let i=0; i<len; i++) {
+                if(test.docs.find(function(frame){return frame.key==i})==null) {
+                    return i;
+                }
+            }
+            return len;
+        });
+    }*/
 
     handleNewList = () => {
         let time = new Date().getTime();
 
         const fireStore = getFirestore();
         fireStore.collection('wireframes').add({
+            //key: this.newKey(),
             name: "",
             owner: this.props.auth.uid, // current user.id
+            height: 500,
+            width: 500,
             controls: [],
             time: time,
         }).then(ref => {
@@ -56,7 +77,9 @@ class HomeScreen extends Component {
 }
 
 const mapStateToProps = (state) => {
+    const {wireframes} = state.firestore.data;
     return {
+        wireframes,
         auth: state.firebase.auth
     };
 };

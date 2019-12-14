@@ -6,6 +6,8 @@ import { firestoreConnect } from 'react-redux-firebase';
 import Modal from 'react-materialize/lib/Modal';
 import { getFirestore } from 'redux-firestore';
 
+import WireframeDisplay from './WireframeDisplay'
+
 class EditScreen extends Component {
     state = {
         name: '',
@@ -35,13 +37,13 @@ class EditScreen extends Component {
     render() {
         const auth = this.props.auth;
         const wireframe = this.props.wireframe;
-        console.log(wireframe); ///
+        console.log(wireframe);
         if (!auth.uid) {
             return <Redirect to="/" />;
         }
 
         return (
-            <div className="row">
+            <div className="row screen_container">
                 
                 <div className="col s3">
                     <div className="input-field">
@@ -53,21 +55,29 @@ class EditScreen extends Component {
                 </div>
 
                 <div className="col s6">
-                    <div>
-
+                    <div className="wireframe_container">
+                        <WireframeDisplay wireframe={wireframe} />
                     </div>
                 </div>
 
                 <div className="col s3">
                     <div className="row">
-                        <div className="col s1 card">
-                            Test
-
+                        <div className="col s3 link_card ">
+                            <i className="card_button material-icons">zoom_out</i>
                         </div>
-                        ZOOM+ ZOOM- Save Close
+                        <div className="col s3 link_card">
+                            <i className="card_button material-icons">zoom_in</i>
+                        </div>
+                        <div className="col s3 link_card">
+                            Save
+                        </div>
+                        <div className="col s3 link_card">
+                            Close
+                        </div>
 
                     </div>
                     <div>Properties</div>
+
 
                 </div>
                 

@@ -37,7 +37,7 @@ class WireframeCard extends React.Component {
 
                 <div className="col s2 link_card" >
                     <Modal className="delete_modal" header="Delete Wireframe"
-                        trigger={<i className="delete_card_button medium material-icons">clear</i>}
+                        trigger={<i className="card_button material-icons">clear</i>}
                         options={{dismissible: false}}
                         actions={
                             <div>

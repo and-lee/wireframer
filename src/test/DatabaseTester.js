@@ -22,6 +22,7 @@ class DatabaseTester extends React.Component {
         const fireStore = getFirestore();
         testJson.wireframes.forEach(wireframeJson => {
             fireStore.collection('wireframes').add({
+                    //key: wireframeJson.key,
                     name: wireframeJson.name,
                     owner: wireframeJson.owner,
                     controls: wireframeJson.controls,
