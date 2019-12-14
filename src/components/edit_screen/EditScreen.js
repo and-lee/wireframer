@@ -11,6 +11,10 @@ import WireframeDisplay from './WireframeDisplay'
 class EditScreen extends Component {
     state = {
         name: '',
+
+        original: this.props.wireframe.controls,
+        currentWork: this.props.wireframe.controls,
+        showModal: false,
     }
 
     handleChange = (e) => {
@@ -27,17 +31,45 @@ class EditScreen extends Component {
         });
     }
 
-    handleConfirm = (e) => {
-        console.log("Delete: todoList.id: " + this.props.todoList.id);
-        const fireStore = getFirestore();
-        fireStore.collection('todoLists').doc(this.props.todoList.id).delete();
-        this.props.history.goBack();
+    showModal() {
+        this.setState({
+            showModal: true,
+        });
     }
+    hideModal() {
+        this.setState({
+            showModal: false,
+        });
+    }
+
+    handleClose = () => {
+        if(this.original == this.currentWork){ // user request close without saving > modal for confirmation
+            this.showModal();
+        } else {
+            this.props.history.push("/");
+        }
+    }
+
+    handleSave = () => {
+        console.log("Diagram Saved.");
+    }
+
+    handleConfirm = () => {
+        this.handleSave();
+        this.handleCancel();
+    }
+
+    handleCancel = () => {
+        this.hideModal();
+        this.props.history.push("/");
+    }
+
 
     render() {
         const auth = this.props.auth;
         const wireframe = this.props.wireframe;
-        console.log(wireframe);
+        //console.log(wireframe);
+        //console.log(this.state.showModal);
         if (!auth.uid) {
             return <Redirect to="/" />;
         }
@@ -62,17 +94,21 @@ class EditScreen extends Component {
 
                 <div className="col s3">
                     <div className="row">
-                        <div className="col s3 link_card ">
+                        <div className="col s3 center_text">
                             <i className="card_button material-icons">zoom_out</i>
                         </div>
-                        <div className="col s3 link_card">
+                        <div className="col s3 center_text">
                             <i className="card_button material-icons">zoom_in</i>
                         </div>
-                        <div className="col s3 link_card">
-                            Save
+                        <div className="col s3 center_text">
+                            <i className="card_button material-icons"
+                                onClick={this.handleSave}>
+                            save</i>
                         </div>
-                        <div className="col s3 link_card">
-                            Close
+                        <div className="col s3 center_text">
+                            <i className="card_button material-icons"
+                                onClick={() => this.handleClose()}>
+                            close</i>
                         </div>
 
                     </div>
@@ -80,7 +116,21 @@ class EditScreen extends Component {
 
 
                 </div>
-                
+
+                <Modal className="delete_modal" header="Close Wireframe"
+                        open={this.state.showModal}
+                        options={{dismissible: false}}
+                        actions={
+                            <div>
+                                <button className="btn waves-effect waves-light z-depth-0" onClick={this.handleConfirm}>Yes</button>
+                                &nbsp;
+                                <button className="btn waves-effect waves-light grey lighten-1 z-depth-0" onClick={this.handleCancel}>No</button>
+                            </div>
+                        }>
+                            <p> Would you like to save before exiting? </p>
+                            <div>Click [yes] to save the diagram.</div>
+                </Modal>
+
             </div>
         );
     }

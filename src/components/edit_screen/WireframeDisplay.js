@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { getFirestore } from 'redux-firestore';
 import Button from 'react-materialize/lib/Button';
 import TextInput from 'react-materialize/lib/TextInput';
 
@@ -10,10 +9,7 @@ class WireframeDisplay extends React.Component {
     state = {
         width: this.props.wireframe.width,
         height: this.props.wireframe.height,
-
-        controls: this.props.wireframe.controls
     }
-
 
     createControl(control) {
         let controlDiv;

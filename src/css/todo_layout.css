@@ -139,6 +139,10 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 .link_card {
   padding: 0!important;
 }
+.center_text {
+  text-align: center;
+  padding: 0!important;
+}
 .delete_modal {
   width: 50%;
 }
