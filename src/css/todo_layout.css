@@ -155,6 +155,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   outline-width: 1px;
   margin: auto;
   position: relative;
+  transform-origin: top left;
 }
 .edit_screen {
   padding-top: 10px;

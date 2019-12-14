@@ -14,6 +14,7 @@ class EditScreen extends Component {
         name: '',
         width: this.props.wireframe.width,
         height: this.props.wireframe.height,
+        zoom: 1,
 
         original: this.props.wireframe.controls,
         currentWork: this.props.wireframe.controls,
@@ -72,6 +73,12 @@ class EditScreen extends Component {
         } else {
             this.props.history.push("/");
         }
+    }
+
+    handleZoom = (magnifier) => {
+        this.setState({
+            zoom: this.state.zoom*magnifier
+        });
     }
 
     handleSave = () => {
@@ -162,15 +169,18 @@ class EditScreen extends Component {
                         </div>
                         
 
-
-
                         <div>Controls</div>
+
+
+
+
+
 
                     </div>
 
                     <div className="col s6">
                         <div className="wireframe_container">
-                            <div className="diagram" style={{width: wireframe.width+"px", height: wireframe.height+"px"}}>
+                            <div className="diagram" style={{width: wireframe.width+"px", height: wireframe.height+"px", transform: "scale("+this.state.zoom+")"}}>
                                 <WireframeDisplay wireframe={wireframe} />
                             </div>
                         </div>
@@ -179,10 +189,14 @@ class EditScreen extends Component {
                     <div className="col s3 side_bar">
                         <div className="row">
                             <div className="col s3 center_text">
-                                <i className="card_button material-icons">zoom_out</i>
+                                <i className="card_button material-icons"
+                                    onClick={() => this.handleZoom(0.5)}>
+                                zoom_out</i>
                             </div>
                             <div className="col s3 center_text">
-                                <i className="card_button material-icons">zoom_in</i>
+                                <i className="card_button material-icons"
+                                    onClick={() => this.handleZoom(2)}>
+                                zoom_in</i>
                             </div>
                             <div className="col s3 center_text">
                                 <i className="card_button material-icons"
@@ -196,7 +210,12 @@ class EditScreen extends Component {
                             </div>
 
                         </div>
+
                         <div>Properties</div>
+
+
+
+
 
 
                     </div>
