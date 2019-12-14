@@ -25,6 +25,8 @@ class DatabaseTester extends React.Component {
                     //key: wireframeJson.key,
                     name: wireframeJson.name,
                     owner: wireframeJson.owner,
+                    width: wireframeJson.width,
+                    height: wireframeJson.height,
                     controls: wireframeJson.controls,
                     
                     time: new Date().getTime(),

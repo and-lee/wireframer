@@ -11,6 +11,8 @@ import WireframeDisplay from './WireframeDisplay'
 class EditScreen extends Component {
     state = {
         name: '',
+        width: this.props.wireframe.width,
+        height: this.props.wireframe.height,
 
         original: this.props.wireframe.controls,
         currentWork: this.props.wireframe.controls,
@@ -64,6 +66,12 @@ class EditScreen extends Component {
         this.props.history.push("/");
     }
 
+    updateDimensions = () => {
+        // Non-integer dimension or integers smaller than 1 or larger than 5000 should be disregarded and should not update the diagram. 
+        
+        
+
+    }
 
     render() {
         const auth = this.props.auth;
@@ -75,62 +83,82 @@ class EditScreen extends Component {
         }
 
         return (
-            <div className="row screen_container">
-                
-                <div className="col s3">
-                    <div className="input-field">
-                        <label htmlFor="email" className="active">Name</label>
-                        <input type="text" name="name" id="name" onChange={this.handleChange} value={wireframe.name} />
-                    </div>
-                    <div>Controls</div>
-
-                </div>
-
-                <div className="col s6">
-                    <div className="wireframe_container">
-                        <WireframeDisplay wireframe={wireframe} />
-                    </div>
-                </div>
-
-                <div className="col s3">
-                    <div className="row">
-                        <div className="col s3 center_text">
-                            <i className="card_button material-icons">zoom_out</i>
+            <div className="edit_screen">
+                <div className="row">
+                    
+                    <div className="col s3 side_bar">
+                        <div className="input-field">
+                            <label htmlFor="email" className="active">Name</label>
+                            <input type="text" name="name" id="name" onChange={this.handleChange} value={wireframe.name} />
                         </div>
-                        <div className="col s3 center_text">
-                            <i className="card_button material-icons">zoom_in</i>
-                        </div>
-                        <div className="col s3 center_text">
-                            <i className="card_button material-icons"
-                                onClick={this.handleSave}>
-                            save</i>
-                        </div>
-                        <div className="col s3 center_text">
-                            <i className="card_button material-icons"
-                                onClick={() => this.handleClose()}>
-                            close</i>
-                        </div>
-
-                    </div>
-                    <div>Properties</div>
-
-
-                </div>
-
-                <Modal className="delete_modal" header="Close Wireframe"
-                        open={this.state.showModal}
-                        options={{dismissible: false}}
-                        actions={
-                            <div>
-                                <button className="btn waves-effect waves-light z-depth-0" onClick={this.handleConfirm}>Yes</button>
-                                &nbsp;
-                                <button className="btn waves-effect waves-light grey lighten-1 z-depth-0" onClick={this.handleCancel}>No</button>
+                        <div className="row">
+                            <div className="col s3 input-field">
+                                <label htmlFor="email" className="active">Width</label>
+                                <input type="text" name="width" id="width" onChange={this.handleChange} value={wireframe.width} />
                             </div>
-                        }>
-                            <p> Would you like to save before exiting? </p>
-                            <div>Click [yes] to save the diagram.</div>
-                </Modal>
+                            
+                            <i className="col s1 cross_icon material-icons">clear</i>
+                            <div className="col s3 input-field">
+                                <label htmlFor="email" className="active">Height</label>
+                                <input type="text" name="height" id="height" onChange={this.handleChange} value={wireframe.height} />
+                            </div>
+                        </div>
+                        
 
+
+
+                        <div>Controls</div>
+
+                    </div>
+
+                    <div className="col s6">
+                        <div className="wireframe_container">
+                            <div className="diagram" style={{width: this.state.width, height: this.state.height}}>
+                                <WireframeDisplay wireframe={wireframe} />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col s3 side_bar">
+                        <div className="row">
+                            <div className="col s3 center_text">
+                                <i className="card_button material-icons">zoom_out</i>
+                            </div>
+                            <div className="col s3 center_text">
+                                <i className="card_button material-icons">zoom_in</i>
+                            </div>
+                            <div className="col s3 center_text">
+                                <i className="card_button material-icons"
+                                    onClick={this.handleSave}>
+                                save</i>
+                            </div>
+                            <div className="col s3 center_text">
+                                <i className="card_button material-icons"
+                                    onClick={() => this.handleClose()}>
+                                close</i>
+                            </div>
+
+                        </div>
+                        <div>Properties</div>
+
+
+                    </div>
+
+                    <Modal className="delete_modal" header="Close Wireframe"
+                            open={this.state.showModal}
+                            options={{dismissible: false}}
+                            actions={
+                                <div>
+                                    <button className="btn waves-effect waves-light z-depth-0" onClick={this.handleConfirm}>Yes</button>
+                                    &nbsp;
+                                    <button className="btn waves-effect waves-light grey lighten-1 z-depth-0" onClick={this.handleCancel}>No</button>
+                                </div>
+                            }>
+                                <p> Would you like to save before exiting? </p>
+                                <div>Click [yes] to save the diagram.</div>
+                    </Modal>
+
+                </div>
             </div>
         );
     }

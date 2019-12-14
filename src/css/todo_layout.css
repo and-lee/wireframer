@@ -14,10 +14,10 @@ body {
 }
 
 body {
-  position: absolute;
-  width: 80%;
-  left: 10%;
-  top: 5%;
+  margin-top: 50px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 div.banner {
@@ -123,7 +123,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 .card_button {
   color: #424242;
   cursor: pointer;
-  font-size: 36pt;
+  font-size: 32pt;
 }
 .link_header {
   font-size: 36pt;
@@ -147,12 +147,29 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   width: 50%;
 }
 .wireframe_container {
-  border-style: solid;
-  border-width: 1px;
-  height: 80vh;
   position: relative;
   overflow: auto;
+  padding: 1px;
 }
-.screen_container {
+.diagram {
+  outline-style: solid;
+  outline-width: 1px;
+  margin: auto;
+  position: relative;
+}
+.edit_screen {
   padding-top: 10px;
+}
+.side_bar{
+  background-color: whitesmoke;
+  overflow: auto;
+}
+.side_bar, .edit_screen {
+  height: 80vh;
+}
+.cross_icon {
+  padding-top: 25px!important;
+  text-align: center;
+  padding-left: 0px!important;
+  padding-right: 0px!important;
 }
