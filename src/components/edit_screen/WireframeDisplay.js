@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import Button from 'react-materialize/lib/Button';
 import TextInput from 'react-materialize/lib/TextInput';
 
 class WireframeDisplay extends React.Component {
@@ -65,16 +64,15 @@ class WireframeDisplay extends React.Component {
             case "button":
                 
                 controlDiv = 
-                    <Button style ={styles}>
+                    <button style ={styles}>
                         {control.text}
-                    </Button>;
+                    </button>;
             break;
 
             case "textfield":
                 controlDiv = 
                     <TextInput style ={styles}
                         placeholder = {control.text} >
-
                     </TextInput>;
             break;
             
@@ -89,15 +87,13 @@ class WireframeDisplay extends React.Component {
 
     renderDiagram() {
         let diagram = [];
-        for(let i=0; i<this.props.wireframe.controls.length; i++) {
-            diagram.push(this.createControl(this.props.wireframe.controls[i]));
+        for(let i=0; i<this.props.drawControls.length; i++) {
+            diagram.push(this.createControl(this.props.drawControls[i]));
         }
         return diagram;
     }
 
     render() {
-        const wireframe = this.props.wireframe;
-
         return (
             <div>
                 {this.renderDiagram()}

@@ -148,11 +148,10 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 .wireframe_container {
   position: relative;
   overflow: auto;
-  padding: 1px;
 }
 .diagram {
-  outline-style: solid;
-  outline-width: 1px;
+  border-style: solid;
+  border-width: 1px;
   margin: auto;
   position: relative;
   transform-origin: top left;
