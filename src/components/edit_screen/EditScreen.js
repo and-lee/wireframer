@@ -273,7 +273,8 @@ class EditScreen extends Component {
                     width: control.width,
                     height: control.height
                 }}
-                
+                size={{ width: control.width,  height: control.height }}
+                position={{ x: control.position[0], y: control.position[1]}}
                 disableDragging
                 enableResizing={{top: false, bottom: false, right: false, left: false, topRight: false, topLeft: false, bottomRight: false, bottomLeft: false}}
                 onClick={(e) => this.handleSelect(e, control)}
@@ -295,6 +296,8 @@ class EditScreen extends Component {
                     width: control.width,
                     height: control.height
                 }}
+                size={{ width: control.width,  height: control.height }}
+                position={{ x: control.position[0], y: control.position[1]}}
                 onDragStop={(e, d) => { control.position=[d.x,d.y] }} // changed: check state change
                 onResizeStop={(e, direction, ref, delta, position) => { // changed: check state change
                     control.width = ref.style.width;
