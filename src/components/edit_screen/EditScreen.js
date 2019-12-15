@@ -290,7 +290,7 @@ class EditScreen extends Component {
 
     createDuplicate = () => {
         let attributes = {}; // this.state.selected.style
-        for(var key in this.state.selected) {
+        for(var key in this.state.selected) { // copy
             attributes[key] = this.state.selected[key];
         }
         attributes.position = [attributes.position[0]+100, attributes.position[1]+100];
@@ -300,9 +300,11 @@ class EditScreen extends Component {
     }
 
     handleKeyPress = (event) => { // key pressing input function
-        if (this.state.selected){
+        if (this.state.selected) {
             if(event.keyCode === 68 && event.ctrlKey) { //ctrl + d
-                this.createDuplicate();
+                if (this.state.selected) {
+                    this.createDuplicate();
+                }
                 event.preventDefault();
             } else if(event.keyCode === 46) { // delete
                 //this.handleDelete();
@@ -325,11 +327,19 @@ class EditScreen extends Component {
             selected: componentID,
             changed: true
         });
-        //id.resizeHandleComponent={bottomRight: handle, topLeft: handle, topRight: handle, bottomLeft: handle};
+        
+        //resizeHandleComponent={bottomRight: handle, topLeft: handle, topRight: handle, bottomLeft: handle};
     }
 
     handleDeSelect = () => {
+        if (this.state.selected) {
+            this.setState({
+                selected: ""
+            });
+        }
         
+
+        //remove RECTANGLES
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -425,7 +435,9 @@ class EditScreen extends Component {
 
                     <div className="col s6">
                         <div className="wireframe_container">
-                            <div className="diagram" style={{width: this.state.width+"px", height: this.state.height+"px", transform: "scale("+this.state.zoom+")"}}>
+                            <div className="diagram" 
+                                onClick={this.handleDeSelect}
+                                style={{width: this.state.width+"px", height: this.state.height+"px", transform: "scale("+this.state.zoom+")"}}>
                                 {this.renderDiagram()}
                             </div>
                         </div>
