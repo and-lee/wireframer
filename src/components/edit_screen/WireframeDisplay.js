@@ -5,13 +5,22 @@ import { firestoreConnect } from 'react-redux-firebase';
 import TextInput from 'react-materialize/lib/TextInput';
 
 class WireframeDisplay extends React.Component {
+    state = {
+        controls: this.props.controls, 
+    }
     
+    componentDidUpdate(prevProps) {
+        if(prevProps.controls !== this.props.controls) {
+          this.setState({controls: this.props.controls});
+        }
+    }
+
     createControl(control) {
         let controlDiv;
         let type = control.type;
         let styles;
 
-        if(type=="container") {
+        if(type=="container") { // createContainer()
             styles = {
                 position: "absolute",
                 left: control.position[0], //pos x
@@ -62,7 +71,6 @@ class WireframeDisplay extends React.Component {
             break;
             
             case "button":
-                
                 controlDiv = 
                     <button style ={styles}>
                         {control.text}
@@ -84,22 +92,18 @@ class WireframeDisplay extends React.Component {
 
     }
 
-
     renderDiagram() {
         let diagram = [];
-        for(let i=0; i<this.props.drawControls.length; i++) {
-            diagram.push(this.createControl(this.props.drawControls[i]));
+        for(let i=0; i<this.state.controls.length; i++) {
+            diagram.push(this.createControl(this.state.controls[i]));
         }
         return diagram;
     }
 
     render() {
-        //console.log("DRAW");
-        //console.log(this.props.drawControls);
         return (
-            <div>
+            <div key={this.props.controls}>
                 {this.renderDiagram()}
-
             </div>
         );
     }

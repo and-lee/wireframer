@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, cloneElement } from 'react';
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -6,7 +6,19 @@ import { firestoreConnect } from 'react-redux-firebase';
 import Modal from 'react-materialize/lib/Modal';
 import { getFirestore } from 'redux-firestore';
 import Button from 'react-materialize/lib/Button';
-import TextInput from 'react-materialize/lib/TextInput';
+import { Rnd } from "react-rnd";
+
+const handle = 
+            <div
+                style={{
+                background: "#fff",
+                borderRadius: "2px",
+                border: "1px solid black",
+                height: "100%",
+                width: "100%",
+                padding: 0,
+                }}
+            /> 
 
 class EditScreen extends Component {
     state = {
@@ -22,6 +34,10 @@ class EditScreen extends Component {
         widthC: this.props.wireframe.width,
         heightC: this.props.wireframe.height,
         changed: false,
+
+
+        selected: "",
+
     }
 
     handleChange = (e) => {
@@ -132,147 +148,157 @@ class EditScreen extends Component {
 
 
     handleAddControl = (type) => {
-        console.log("Add "+type);
-        let addControl = this.state.currentWork;
-        let con ={};
-        //con {type: type}
+        let con = {};
         
         switch(type) {
             case "container":
                 con = {
-                    type: "container",
                     width: 250,
                     height: 250,
-                    position: [0,0],
                     backgroundColor: "#ffffff",
                     borderColor: "#000000",
-                    borderWeight: 1,
+                    borderWidth: 1,
                     borderRadius: 2
                 };
             break;
             case "label":
                 con = {
-                    type: "label",
-                    width: 250,
-                    height: 250,
-                    position: [0,0],
+                    width: 100, // dynamic based on text
+                    height: 25,
                     text: "Prompt for Input", ///////////////////////////////////////////////
                     fontSize: 14,
                     textColor: "black",
                     backgroundColor: "none",
                     borderColor: "#000000",
-                    borderWeight: 0,
+                    borderWidth: 0,
                     borderRadius: 0
                 };
             break;
             case "button":
                 con = {
-                    type: "button",
                     width: 100,
                     height: 25,
-                    position: [0,0],
                     text: "Submit", // default text ...
                     fontSize: 14,
                     textColor: "black",
                     backgroundColor: "#d6d6d6",
                     borderColor: "#000000",
-                    borderWeight: 1,
+                    borderWidth: 1,
                     borderRadius: 2
                 };
             break;
             case "textfield":
                 con = {
-                    type: "textfield",
                     width: 150,
                     height: 25,
-                    position: [0,0],
                     text: "Input", // default text ...
                     fontSize: 14,
-                    textColor: "black",
+                    textColor: "#d1d1d1",
                     backgroundColor: "#ffffff",
                     borderColor: "#000000",
-                    borderWeight: 1,
+                    borderWidth: 1,
                     borderRadius: 2
                 };
             break;
         }
+        con.type = type;
+        con.position = [0,0]
 
-        addControl.push(con);
+        this.addControl(con);
+    }
+
+    addControl = (controlProperties) => {
+        console.log("Add "+controlProperties.type);
+        let controlList = this.state.currentWork;
+        controlList.push(controlProperties);
         this.setState({
-            currentWork: addControl,
+            currentWork: controlList,
             changed: true
         });
     }
 
     createControl(control) {
-        let controlDiv;
         let type = control.type;
         let styles;
 
-        if(type=="container") {
+        if(type=="container") { // create container
             styles = {
-                position: "absolute",
-                left: control.position[0], //pos x
-                top: control.position[1], //pos y
-                width: control.width,
-                height: control.height,
                 backgroundColor: control.backgroundColor,
                 borderColor: control.borderColor,
-                borderWidth: control.borderWeight,
+                borderWidth: control.borderWidth,
                 borderRadius: control.borderRadius,
                 borderStyle: "solid",
                 //z-index
             }
         }
-        if(type=="label" | type=="button" | type=="textfield") {
+        if(type=="label" | type=="textfield") {
             styles = {
-                position: "absolute",
-                left: control.position[0], //pos x
-                top: control.position[1], //pos y
-                width: control.width,
-                height: control.height,
                 backgroundColor: control.backgroundColor,
                 borderColor: control.borderColor,
-                borderWidth: control.borderWeight,
+                borderWidth: control.borderWidth,
                 borderRadius: control.borderRadius,
                 borderStyle: "solid",
                 //z-index
                 fontSize: control.fontSize,
-                textColor: control.textColor,
+                color: control.textColor,
+            }
+        }
+        if(type=="button") {
+            styles = {
+                backgroundColor: control.backgroundColor,
+                borderColor: control.borderColor,
+                borderWidth: control.borderWidth,
+                borderRadius: control.borderRadius,
+                borderStyle: "solid",
+                //z-index
+                fontSize: control.fontSize,
+                color: control.textColor,
+                textAlign: "center",
             }
         }
         
-        switch(type) {
-            case "container":
-                controlDiv = 
-                    <div style ={styles}>
-                    </div>;
-            break;
-            case "label":
-                controlDiv = 
-                    <div style ={styles}>
-                        {control.text}
-                    </div>;
-            break;
-            case "button":
-                
-                controlDiv = 
-                    <button style ={styles}>
-                        {control.text}
-                    </button>;
-            break;
-            case "textfield":
-                controlDiv = 
-                    <TextInput style ={styles}
-                        placeholder = {control.text} >
-                    </TextInput>;
-            break;
-        }
-        
         return (
-            controlDiv
+            <Rnd
+                bounds="parent"
+                style={styles}
+                default={{
+                    x: control.position[0],
+                    y: control.position[1],
+                    width: control.width,
+                    height: control.height
+                }}
+                onDragStop={(e, d) => { control.position=[d.x,d.y] }} // changed: check state change
+                onResizeStop={(e, direction, ref, delta, position) => { // changed: check state change
+                    control.width = ref.style.width;
+                    control.height= ref.style.height;
+                }}
+                ref={React.createRef()}
+                onClick={() => this.handleSelect(this.ref)}
+                onDrag={() => this.handleSelect(this.ref)}
+                >
+            {control.text}
+            </Rnd>
         );
     }
+
+    /////////////////////////////////////////////////////////////////////
+
+    createDuplicate() {
+        let attributes = this.props.wireframe.controls[0]; ///////////////////////
+        attributes.position = [attributes.position[0]+100, attributes.position[1]+100];
+        this.addControl(attributes);
+    }
+
+    handleSelect = (componentID) => {
+        console.log(React.createRef());
+        this.setState({
+            selected: componentID,
+            changed: true
+        });
+        //id.resizeHandleComponent={bottomRight: handle, topLeft: handle, topRight: handle, bottomLeft: handle};
+    }
+
+    /////////////////////////////////////////////////////////////////////////
 
     renderDiagram() {
         let diagram = [];
@@ -286,10 +312,6 @@ class EditScreen extends Component {
     render() {
         const auth = this.props.auth;
         const wireframe = this.props.wireframe;
-        //console.log(wireframe);
-        //console.log(this.state.showModal);
-        //console.log(this.state.currentWork);
-
         if (!auth.uid) {
             return <Redirect to="/" />;
         }

@@ -13,7 +13,7 @@
                     "position": [0,0],
                     "backgroundColor": "#ffffff",
                     "borderColor": "#000000",
-                    "borderWeight": 1,
+                    "borderWidth": 1,
                     "borderRadius": 2
                 },
                 {
@@ -26,7 +26,7 @@
                     "textColor": "#000000",
                     "backgroundColor": "#d6d6d6",
                     "borderColor": "#000000",
-                    "borderWeight": 1,
+                    "borderWidth": 1,
                     "borderRadius": 2
                 }
             ]
@@ -44,7 +44,7 @@
                     "position": [0,0],
                     "backgroundColor": "#ffffff",
                     "borderColor": "lightcoral",
-                    "borderWeight": 1,
+                    "borderWidth": 1,
                     "borderRadius": 20
                 },
                 {
@@ -57,7 +57,7 @@
                     "textColor": "white",
                     "backgroundColor": "lightblue",
                     "borderColor": "lightcoral",
-                    "borderWeight": 0,
+                    "borderWidth": 0,
                     "borderRadius": 0
                 },
                 {
@@ -70,7 +70,7 @@
                     "textColor": "#d6d6d6",
                     "backgroundColor": "lightgoldenrodyellow",
                     "borderColor": "gray",
-                    "borderWeight": 1,
+                    "borderWidth": 1,
                     "borderRadius": 0
                 },
                 {
@@ -83,7 +83,7 @@
                     "textColor": "#000000",
                     "backgroundColor": "#d6d6d6",
                     "borderColor": "#000000",
-                    "borderWeight": 1,
+                    "borderWidth": 1,
                     "borderRadius": 2
                 }
             ]
@@ -101,7 +101,7 @@
                     "position": [0,0],
                     "backgroundColor": "lightsteelblue",
                     "borderColor": "#000000",
-                    "borderWeight": 0,
+                    "borderWidth": 0,
                     "borderRadius": 2
                 },
                 {
@@ -114,7 +114,7 @@
                     "textColor": "#000000",
                     "backgroundColor": "#ffffff",
                     "borderColor": "#ffffff",
-                    "borderWeight": 0,
+                    "borderWidth": 0,
                     "borderRadius": 0
                 },
                 {
@@ -127,7 +127,7 @@
                     "textColor": "#000000",
                     "backgroundColor": "#ffffff",
                     "borderColor": "#ffffff",
-                    "borderWeight": 0,
+                    "borderWidth": 0,
                     "borderRadius": 0
                 },
                 {
@@ -140,7 +140,7 @@
                     "textColor": "#000000",
                     "backgroundColor": "#ffffff",
                     "borderColor": "#ffffff",
-                    "borderWeight": 0,
+                    "borderWidth": 0,
                     "borderRadius": 0
                 },
                 {
@@ -153,7 +153,7 @@
                     "textColor": "#000000",
                     "backgroundColor": "#ffffff",
                     "borderColor": "#ffffff",
-                    "borderWeight": 0,
+                    "borderWidth": 0,
                     "borderRadius": 0
                 }
             ]
