@@ -94,6 +94,8 @@ class WireframeDisplay extends React.Component {
     }
 
     render() {
+        //console.log("DRAW");
+        //console.log(this.props.drawControls);
         return (
             <div>
                 {this.renderDiagram()}

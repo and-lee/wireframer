@@ -5,9 +5,8 @@ import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import Modal from 'react-materialize/lib/Modal';
 import { getFirestore } from 'redux-firestore';
-
-import WireframeDisplay from './WireframeDisplay'
 import Button from 'react-materialize/lib/Button';
+import TextInput from 'react-materialize/lib/TextInput';
 
 class EditScreen extends Component {
     state = {
@@ -16,13 +15,13 @@ class EditScreen extends Component {
         height: this.props.wireframe.height,
         zoom: 1,
 
-        original: this.props.wireframe.controls,
         currentWork: this.props.wireframe.controls,
         showModal: false,
         disable: true,
 
         widthC: this.props.wireframe.width,
         heightC: this.props.wireframe.height,
+        changed: false,
     }
 
     handleChange = (e) => {
@@ -74,7 +73,7 @@ class EditScreen extends Component {
     }
 
     handleClose = () => {
-        if((this.original != this.currentWork) | (this.state.name!=this.props.wireframe.name) 
+        if(this.state.changed | (this.state.name!=this.props.wireframe.name) 
             | (this.state.width!=this.props.wireframe.width) | (this.state.height!=this.props.wireframe.height)){ // user request close without saving > modal for confirmation
             this.showModal();
         } else {
@@ -132,36 +131,114 @@ class EditScreen extends Component {
     }
 
 
-
     handleAddControl = (type) => {
         console.log("Add "+type);
         let addControl = this.state.currentWork;
+        let con ={};
         
         switch(type) {
             case "container":
-                addControl.push({
+                con = {
                     key: 0,
                     type: "container",
-                    width: 100,
-                    height: 100,
+                    width: 250,
+                    height: 250,
                     position: [0,0],
                     backgroundColor: "#ffffff",
                     borderColor: "#000000",
                     borderWeight: 1,
                     borderRadius: 2
-                });
+                };
             break;
 
 
 
-        }
-        
 
+
+        }
+
+        addControl.push(con);
         this.setState({
             currentWork: addControl
         });
+    }
 
+    createControl(control) {
+        let controlDiv;
+        let type = control.type;
+        let styles;
+
+        if(type=="container") {
+            styles = {
+                position: "absolute",
+                left: control.position[0], //pos x
+                top: control.position[1], //pos y
+                width: control.width,
+                height: control.height,
+                backgroundColor: control.backgroundColor,
+                borderColor: control.borderColor,
+                borderWidth: control.borderWeight,
+                borderRadius: control.borderRadius,
+                borderStyle: "solid",
+                //z-index
+            }
+        }
+        if(type=="label" | type=="button" | type=="textfield") {
+            styles = {
+                position: "absolute",
+                left: control.position[0], //pos x
+                top: control.position[1], //pos y
+                width: control.width,
+                height: control.height,
+                backgroundColor: control.backgroundColor,
+                borderColor: control.borderColor,
+                borderWidth: control.borderWeight,
+                borderRadius: control.borderRadius,
+                borderStyle: "solid",
+                //z-index
+                fontSize: control.fontSize,
+                textColor: control.textColor,
+            }
+        }
         
+        switch(type) {
+            case "container":
+                controlDiv = 
+                    <div style ={styles}>
+                    </div>;
+            break;
+            case "label":
+                controlDiv = 
+                    <div style ={styles}>
+                        {control.text}
+                    </div>;
+            break;
+            case "button":
+                
+                controlDiv = 
+                    <button style ={styles}>
+                        {control.text}
+                    </button>;
+            break;
+            case "textfield":
+                controlDiv = 
+                    <TextInput style ={styles}
+                        placeholder = {control.text} >
+                    </TextInput>;
+            break;
+        }
+        
+        return (
+            controlDiv
+        );
+    }
+
+    renderDiagram() {
+        let diagram = [];
+        for(let i=0; i<this.state.currentWork.length; i++) {
+            diagram.push(this.createControl(this.state.currentWork[i]));
+        }
+        return diagram;
     }
 
 
@@ -170,7 +247,8 @@ class EditScreen extends Component {
         const wireframe = this.props.wireframe;
         //console.log(wireframe);
         //console.log(this.state.showModal);
-        ////console.log(this.state.currentWork);
+        //console.log(this.state.currentWork);
+
         if (!auth.uid) {
             return <Redirect to="/" />;
         }
@@ -239,7 +317,7 @@ class EditScreen extends Component {
                     <div className="col s6">
                         <div className="wireframe_container">
                             <div className="diagram" style={{width: this.state.width+"px", height: this.state.height+"px", transform: "scale("+this.state.zoom+")"}}>
-                                <WireframeDisplay wireframe={wireframe} drawControls={this.state.currentWork}/>
+                                {this.renderDiagram()}
                             </div>
                         </div>
                     </div>
