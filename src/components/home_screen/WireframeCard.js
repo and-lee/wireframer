@@ -41,7 +41,7 @@ class WireframeCard extends React.Component {
                         options={{dismissible: false}}
                         actions={
                             <div>
-                                <button className="btn waves-effect waves-light z-depth-0" onClick={this.handleDelete}>Yes</button>
+                                <button className="btn waves-effect waves-light z-depth-0 modal-close" onClick={this.handleDelete}>Yes</button>
                                 &nbsp;
                                 <button className="btn waves-effect waves-light grey lighten-1 z-depth-0 modal-close">No</button>
                             </div>

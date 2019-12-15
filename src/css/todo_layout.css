@@ -49,34 +49,9 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 
 
-.listheader {
-  font-size: 36px;
-  padding-top: 0!important;
-  padding-bottom: 0!important;
-}
-.itemCard {
-  font-size: 20px;
-}
-
-.list_item_card_due_date, #addItemCard {
-  text-align: center;
-}
-
-.assigned_to {
-  font-weight: bold;
-}
-.list_item_card_assigned_to {
-  padding-left:0!important;
-}
-#name, #owner, #description, #assigned_to, #due_date {
+#name {
   font-size: 24px;
   padding-top: 8px;
-}
-#editItemButtons {
-  padding-top: 20px;
-}
-#addItemCard {
-  text-align: center;
 }
 .home_new_list_container {
   padding: 5px;
@@ -84,23 +59,6 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 .largeIcon {
   font-size: 50px !important;
-}
-#addItemCardContent {
-  font-size: 48px;
-  padding-top: 8px;
-}
-#modal-0 {
-  font-size: 24px;
-  max-height: 100%;
-}
-#deleteList, #addItemCardContent, .list_item_card_assigned_to, .list_item_card_due_date, .list_item_card_completed {
-  cursor: pointer;
-}
-#todoItemHeader {
-  padding-bottom: 10px;
-}
-#todoListHeader {
-  padding: 0!important;
 }
 
 .input-field > label, .statusLabel {
@@ -171,4 +129,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   text-align: center;
   padding-left: 0px!important;
   padding-right: 0px!important;
+}
+.nums {
+  width: 25%!important;
 }

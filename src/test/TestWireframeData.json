@@ -43,7 +43,7 @@
                     "height": 800,
                     "position": [0,0],
                     "backgroundColor": "#ffffff",
-                    "borderColor": "lightcoral",
+                    "borderColor": "#f08080",
                     "borderWidth": 1,
                     "borderRadius": 20
                 },
@@ -54,9 +54,9 @@
                     "position": [30,30],
                     "text": "Welcome!",
                     "fontSize": 24,
-                    "textColor": "white",
-                    "backgroundColor": "lightblue",
-                    "borderColor": "lightcoral",
+                    "textColor": "#ffffff",
+                    "backgroundColor": "#add8e6",
+                    "borderColor": "#f08080",
                     "borderWidth": 0,
                     "borderRadius": 0
                 },
@@ -68,8 +68,8 @@
                     "text": "Contact Info",
                     "fontSize": 14,
                     "textColor": "#d6d6d6",
-                    "backgroundColor": "lightgoldenrodyellow",
-                    "borderColor": "gray",
+                    "backgroundColor": "#fafad2",
+                    "borderColor": "#808080",
                     "borderWidth": 1,
                     "borderRadius": 0
                 },
@@ -99,7 +99,7 @@
                     "width": 500,
                     "height": 100,
                     "position": [0,0],
-                    "backgroundColor": "lightsteelblue",
+                    "backgroundColor": "#b0c4de",
                     "borderColor": "#000000",
                     "borderWidth": 0,
                     "borderRadius": 2

@@ -153,8 +153,7 @@ class EditScreen extends Component {
                     backgroundColor: "#ffffff",
                     borderColor: "#000000",
                     borderWidth: 1,
-                    borderRadius: 2
-                };
+                    borderRadius: 2 };
             break;
             case "label":
                 con = {
@@ -162,12 +161,11 @@ class EditScreen extends Component {
                     height: 25,
                     text: "Prompt for Input",
                     fontSize: 14,
-                    textColor: "black",
-                    backgroundColor: "none",
+                    textColor: "#000000",
+                    backgroundColor: "",
                     borderColor: "#000000",
                     borderWidth: 0,
-                    borderRadius: 0
-                };
+                    borderRadius: 0 };
             break;
             case "button":
                 con = {
@@ -175,12 +173,11 @@ class EditScreen extends Component {
                     height: 25,
                     text: "Submit", // default text
                     fontSize: 14,
-                    textColor: "black",
+                    textColor: "#000000",
                     backgroundColor: "#d6d6d6",
                     borderColor: "#000000",
                     borderWidth: 1,
-                    borderRadius: 2
-                };
+                    borderRadius: 2 };
             break;
             case "textfield":
                 con = {
@@ -192,13 +189,11 @@ class EditScreen extends Component {
                     backgroundColor: "#ffffff",
                     borderColor: "#000000",
                     borderWidth: 1,
-                    borderRadius: 2
-                };
+                    borderRadius: 2 };
             break;
         }
         con.type = type;
         con.position = [0,0]
-
         this.addControl(con);
     }
 
@@ -263,8 +258,7 @@ class EditScreen extends Component {
                     x: control.position[0],
                     y: control.position[1],
                     width: control.width,
-                    height: control.height
-                }}
+                    height: control.height }}
                 size={{ width: control.width,  height: control.height }}
                 position={{ x: control.position[0], y: control.position[1]}}
                 disableDragging
@@ -286,8 +280,7 @@ class EditScreen extends Component {
                     x: control.position[0],
                     y: control.position[1],
                     width: control.width,
-                    height: control.height
-                }}
+                    height: control.height }}
                 size={{ width: control.width,  height: control.height }}
                 position={{ x: control.position[0], y: control.position[1]}}
                 onDragStop={(e, d) => { 
@@ -304,8 +297,7 @@ class EditScreen extends Component {
                         });
                     }
                     control.width = ref.style.width;
-                    control.height= ref.style.height;
-                }}
+                    control.height= ref.style.height; }}
                 resizeHandleComponent={{bottomRight: handle, topLeft: handle, topRight: handle, bottomLeft: handle}}
                 enableResizing={{top: false, bottom: false, right: false, left: false, topRight: true, topLeft: true, bottomRight: true, bottomLeft: true}}
                 onClick={(e) => this.handleSelect(e, control)}
@@ -393,27 +385,6 @@ class EditScreen extends Component {
         return diagram;
     }
 
-    //////////////////// ControlProperties // <ControlProperties control={this.state.selected}/>
-    createAttribute(type, value) {
-
-        
-
-        
-        
-        return (
-            <div>{value}</div>
-        );
-    }
-
-    renderProperties = (selectedControl) => {
-        let attributes = [];
-        for(var key in selectedControl) { // copy
-            attributes.push(this.createAttribute(key, selectedControl[key]));
-        }
-        return attributes;
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-
     render() {
         const auth = this.props.auth;
         const wireframe = this.props.wireframe;
@@ -424,10 +395,9 @@ class EditScreen extends Component {
         return (
             <div className="edit_screen">
                 <div className="row">
-                    
                     <div className="col s3 side_bar">
                         <div className="input-field">
-                            <label htmlFor="email" className="active">Name</label>
+                            <label className="active">Name</label>
                             <input type="text" name="name" id="name" onChange={this.updateChange} value={this.state.name} />
                         </div>
                         <div className="row">
@@ -435,14 +405,11 @@ class EditScreen extends Component {
                                 <label htmlFor="email" className="active">Width</label>
                                 <input type="number" name="width" id="widthC" onChange={this.updateChange} value={this.state.widthC} />
                             </div>
-                            
                             <i className="col s1 cross_icon material-icons">clear</i>
-                            
                             <div className="col s3 input-field">
                                 <label htmlFor="email" className="active">Height</label>
                                 <input type="number" name="height" id="heightC" onChange={this.updateChange} value={this.state.heightC} />
                             </div>
-
                             <div className="col s3">
                                 <Button
                                     style={{marginLeft: "25px", marginTop: "25px"}}
@@ -450,32 +417,24 @@ class EditScreen extends Component {
                                     onClick={this.updateDimensions}>
                                 Update</Button>
                             </div>
-                            
                         </div>
-                        
-
                         <div>Controls</div>
-
                         <div>
-
+                            <div></div>
                             <Button onClick={() => this.handleAddControl("container")}>Add Container</Button>
                         </div>
-                        
                         <div>
-
+                            <div></div>
                             <Button onClick={() => this.handleAddControl("label")}>Add Label</Button>
                         </div>
-
                         <div>
-
+                            <div></div>
                             <Button onClick={() => this.handleAddControl("button")}>Add Text Button</Button>
                         </div>
-
                         <div>
-
+                            <div></div>
                             <Button onClick={() => this.handleAddControl("textfield")}>Add Textfield</Button>
                         </div>
-
                     </div>
 
                     <div className="col s6">
@@ -512,23 +471,18 @@ class EditScreen extends Component {
                             </div>
 
                         </div>
-
                         <div>Properties</div>
-                        <div>{this.renderProperties(this.state.selected)}</div>
-
-
+                        <ControlProperties control={this.state.selected}/>
                     </div>
 
                     <Modal className="delete_modal" header="Close Wireframe"
                             open={this.state.showModal}
                             options={{dismissible: false}}
-                            actions={
-                                <div>
-                                    <button className="btn waves-effect waves-light z-depth-0" onClick={this.handleConfirm}>Yes</button>
-                                    &nbsp;
-                                    <button className="btn waves-effect waves-light grey lighten-1 z-depth-0" onClick={this.handleCancel}>No</button>
-                                </div>
-                            }>
+                            actions={<div>
+                                <button className="btn waves-effect waves-light z-depth-0" onClick={this.handleConfirm}>Yes</button>
+                                &nbsp;
+                                <button className="btn waves-effect waves-light grey lighten-1 z-depth-0" onClick={this.handleCancel}>No</button>
+                            </div>}>
                                 <p> Would you like to save before exiting? </p>
                                 <div>Click [yes] to save the diagram.</div>
                     </Modal>

@@ -2,99 +2,73 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
+//import { PhotoshopPicker } from 'react-color';
 
 class controlProperties extends React.Component {
     state = {
-        control: this.props.control, 
-    }
-    
-    createProperty(control) {
-        let controlDiv;
-        let type = control.type;
-        let styles;
-
-        if(type=="container") { // createContainer()
-            styles = {
-                position: "absolute",
-                left: control.position[0], //pos x
-                top: control.position[1], //pos y
-                width: control.width,
-                height: control.height,
-                backgroundColor: control.backgroundColor,
-                borderColor: control.borderColor,
-                borderWidth: control.borderWeight,
-                borderRadius: control.borderRadius,
-                borderStyle: "solid",
-    
-                //z-index
-            }
-        }
-        if(type=="label" | type=="button" | type=="textfield") {
-            styles = {
-                position: "absolute",
-                left: control.position[0], //pos x
-                top: control.position[1], //pos y
-                width: control.width,
-                height: control.height,
-                backgroundColor: control.backgroundColor,
-                borderColor: control.borderColor,
-                borderWidth: control.borderWeight,
-                borderRadius: control.borderRadius,
-                borderStyle: "solid",
-    
-                //z-index
-                fontSize: control.fontSize,
-                textColor: control.textColor,
-            }
-        }
-        
-
-        switch(type) {
-            case "container":
-                controlDiv = 
-                    <div style ={styles}>
-                    </div>;
-            break;
-
-            case "label":
-                controlDiv = 
-                    <div style ={styles}>
-                        {control.text}
-                    </div>;
-            break;
-            
-            case "button":
-                controlDiv = 
-                    <button style ={styles}>
-                        {control.text}
-                    </button>;
-            break;
-
-            case "textfield":
-                controlDiv = 
-                    <div></div>
-            break;
-            
-        }
-        
-        return (
-            controlDiv
-        );
 
     }
 
-    renderDiagram() {
-        let diagram = [];
-        for(let i=0; i<this.state.control.length; i++) {
-            diagram.push(this.createProperty(this.state.control[i]));
-        }
-        return diagram;
+    handleChange = (e) => {
+        const { target } = e;
+
+        /*this.setState(state => ({
+            ...state,
+            [target.id]: target.value,
+        }));
+
+        // update database
+        this.props.firestore.collection("todoLists").doc(this.props.todoList.id).update( {
+            [target.id] : target.value
+        });*/
+        /*if(target.id =="fontSize") {
+            this.props.control[target.id] = target.value+"px";
+        }*/
+        this.props.control[target.id] = target.value;
     }
+
+
 
     render() {
+        const control = this.props.control;
+        //console.log(control);
+        if (control==null) {
+            return (<></>); // no control selected
+        }
         return (
             <div>
-                {this.renderDiagram()}
+                {control.text ?
+                    <div className="input-field">
+                            <label className="active">Text</label>
+                            <input type="text" name="text" id="text" onChange={(e) => this.handleChange(e)} value={control.text} />
+                    </div> : <></> }
+                {control.fontSize ?
+                    <div className="input-field">
+                            <label className="active">Font Size</label>
+                            <input className="nums" type="number" name="fontSize" id="fontSize" onChange={(e) => this.handleChange(e)} value={control.fontSize} />
+                    </div> : <></> }
+                {control.textColor ?
+                    <div> Text Color
+                            <input type="color" name="textColor" id="textColor" onChange={(e) => this.handleChange(e)} value={control.textColor} />
+                    </div> : <></> }
+
+                    <div> Background Color
+                            <input type="color" name="backgroundColor" id="backgroundColor" onChange={(e) => this.handleChange(e)} value={control.backgroundColor} />
+                    </div>
+                    <div> Border Color
+                            <input type="color" name="borderColor" id="borderColor" onChange={(e) => this.handleChange(e)} value={control.borderColor} />
+                    </div>
+
+                <div className="input-field">
+                            <label className="active">Border Width</label>
+                            <input className="nums" type="number" name="borderWidth" id="borderWidth" onChange={(e) => this.handleChange(e)} value={control.borderWidth} />
+                </div>
+                
+                <div className="input-field">
+                            <label className="active">Border Radius</label>
+                            <input className="nums" type="number" name="borderRadius" id="borderWidth" onChange={(e) => this.handleChange(e)} value={control.borderRadius} />
+                </div>
+                
             </div>
         );
     }
