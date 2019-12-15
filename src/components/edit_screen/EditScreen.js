@@ -8,6 +8,9 @@ import { getFirestore } from 'redux-firestore';
 import Button from 'react-materialize/lib/Button';
 import { Rnd } from "react-rnd";
 
+import WireframeDisplay from './WireframeDisplay';
+import ControlProperties from './ControlProperties';
+
 const handle = 
             <div
                 style={{
@@ -105,13 +108,15 @@ class EditScreen extends Component {
 
     handleSave = () => {
         console.log("Diagram Saved.");
-
         const fireStore = getFirestore();
         fireStore.collection("wireframes").doc(this.props.wireframe.id).update( {
                 controls : this.state.currentWork,
                 width : this.state.width,
                 height : this.state.height,
                 name: this.state.name,
+        });
+        this.setState({
+            changed: false
         });
     }
 
@@ -208,12 +213,13 @@ class EditScreen extends Component {
     }
 
     addControl = (controlProperties) => {
-        console.log("Add "+controlProperties.type);
         let controlList = this.state.currentWork;
-        controlList.push(controlProperties);
         this.setState({
             currentWork: controlList,
             changed: true
+        },function(){
+            console.log("Add "+controlProperties.type);
+            controlList.push(controlProperties);
         });
     }
 
@@ -272,10 +278,9 @@ class EditScreen extends Component {
                     control.width = ref.style.width;
                     control.height= ref.style.height;
                 }}
-                ref={React.createRef()}
-                onClick={() => this.handleSelect(this.ref)}
-                onDrag={() => this.handleSelect(this.ref)}
-                >
+                ref={React.createRef()} //////// for rect ////////////////////////////////////
+                onClick={() => this.handleSelect(control)}
+            >
             {control.text}
             </Rnd>
         );
@@ -283,14 +288,39 @@ class EditScreen extends Component {
 
     /////////////////////////////////////////////////////////////////////
 
-    createDuplicate() {
-        let attributes = this.props.wireframe.controls[0]; ///////////////////////
+    createDuplicate = () => {
+        let attributes = {}; // this.state.selected.style
+        for(var key in this.state.selected) {
+            attributes[key] = this.state.selected[key];
+        }
         attributes.position = [attributes.position[0]+100, attributes.position[1]+100];
+
         this.addControl(attributes);
+        this.handleSelect(this.state.currentWork[this.state.currentWork.length-1]);
+    }
+
+    handleKeyPress = (event) => { // key pressing input function
+        if (this.state.selected){
+            if(event.keyCode === 68 && event.ctrlKey) { //ctrl + d
+                this.createDuplicate();
+                event.preventDefault();
+            } else if(event.keyCode === 46) { // delete
+                //this.handleDelete();
+                event.preventDefault();
+            }
+        }
+    }
+    componentDidMount() {
+        document.addEventListener('keydown', this.handleKeyPress, false);
+    }
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleKeyPress, false);
     }
 
     handleSelect = (componentID) => {
-        console.log(React.createRef());
+        //console.log(React.createRef());
+        console.log("Selected:");
+        console.log(componentID);
         this.setState({
             selected: componentID,
             changed: true
@@ -298,9 +328,13 @@ class EditScreen extends Component {
         //id.resizeHandleComponent={bottomRight: handle, topLeft: handle, topRight: handle, bottomLeft: handle};
     }
 
+    handleDeSelect = () => {
+        
+    }
+
     /////////////////////////////////////////////////////////////////////////
 
-    renderDiagram() {
+    renderDiagram() { // <WireframeDisplay controls={this.state.currentWork}/>
         let diagram = [];
         for(let i=0; i<this.state.currentWork.length; i++) {
             diagram.push(this.createControl(this.state.currentWork[i]));
@@ -308,6 +342,18 @@ class EditScreen extends Component {
         return diagram;
     }
 
+    //////////////////////////////////////////////////////////////////////////////
+
+    renderProperties = () => { // <ControlProperties control={this.state.selected}/>
+        let properties = [];
+        for(let i=0; i<this.state.selected.length; i++) {
+            properties.push(this.state.selected[i]);
+        }
+        //return properties;
+        console.log(properties);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     render() {
         const auth = this.props.auth;
@@ -411,6 +457,8 @@ class EditScreen extends Component {
                         </div>
 
                         <div>Properties</div>
+                            
+
 
 
 

@@ -3,18 +3,13 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
-class WireframeDisplay extends React.Component {
+
+class controlProperties extends React.Component {
     state = {
-        controls: this.props.controls, 
+        control: this.props.control, 
     }
     
-    /*componentDidUpdate(prevProps) {
-        if(prevProps.controls !== this.props.controls) {
-          this.setState({controls: this.props.controls});
-        }
-    }*/
-
-    createControl(control) {
+    createProperty(control) {
         let controlDiv;
         let type = control.type;
         let styles;
@@ -78,9 +73,7 @@ class WireframeDisplay extends React.Component {
 
             case "textfield":
                 controlDiv = 
-                    <div style ={styles}>
-                        {control.text}
-                    </div>;
+                    <div></div>
             break;
             
         }
@@ -93,8 +86,8 @@ class WireframeDisplay extends React.Component {
 
     renderDiagram() {
         let diagram = [];
-        for(let i=0; i<this.state.controls.length; i++) {
-            diagram.push(this.createControl(this.state.controls[i]));
+        for(let i=0; i<this.state.control.length; i++) {
+            diagram.push(this.createProperty(this.state.control[i]));
         }
         return diagram;
     }
@@ -122,4 +115,4 @@ export default compose(
     firestoreConnect([
         { collection: 'wireframes' },
     ]),
-)(WireframeDisplay);
+)(controlProperties);
