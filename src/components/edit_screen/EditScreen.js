@@ -39,7 +39,7 @@ class EditScreen extends Component {
         changed: false,
 
 
-        selected: "",
+        selected: null,
 
     }
 
@@ -280,7 +280,7 @@ class EditScreen extends Component {
                     control.height= ref.style.height;
                 }}
                 ref={React.createRef()} //////// for rect ////////////////////////////////////
-                onClick={() => this.handleSelect(control)}
+                onClick={(e) => this.handleSelect(e, control)}
             >
             {control.text}
             </Rnd>
@@ -297,21 +297,24 @@ class EditScreen extends Component {
         attributes.position = [attributes.position[0]+100, attributes.position[1]+100];
 
         this.addControl(attributes);
-        this.handleSelect(this.state.currentWork[this.state.currentWork.length-1]);
+        //this.handleSelect(this.state.currentWork[this.state.currentWork.length-1]);
+        this.setState({
+            selected: this.state.currentWork[this.state.currentWork.length-1]
+        });
+
     }
 
     handleKeyPress = (event) => { // key pressing input function
-        if (this.state.selected) {
-            if(event.keyCode === 68 && event.ctrlKey) { //ctrl + d
-                if (this.state.selected) {
-                    this.createDuplicate();
-                }
-                event.preventDefault();
-            } else if(event.keyCode === 46) { // delete
-                //this.handleDelete();
-                event.preventDefault();
+        if(event.keyCode === 68 && event.ctrlKey) { //ctrl + d
+            if (this.state.selected) {
+                this.createDuplicate();
             }
+            event.preventDefault();
+        } else if(event.keyCode === 46) { // delete
+            //this.handleDelete();
+             event.preventDefault();
         }
+        
     }
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyPress, false);
@@ -320,23 +323,23 @@ class EditScreen extends Component {
         document.removeEventListener('keydown', this.handleKeyPress, false);
     }
 
-    handleSelect = (componentID) => {
-        //console.log(React.createRef());
+    handleSelect = (e, componentID) => {
         console.log("Selected:");
         console.log(componentID);
         this.setState({
             selected: componentID,
             changed: true
         });
+        e.stopPropagation();
         //resizeHandleComponent={bottomRight: handle, topLeft: handle, topRight: handle, bottomLeft: handle};
     }
 
     handleDeSelect = () => {
-        if (this.state.selected) {
+        console.log("REE");
             this.setState({
-                selected: ""
+                selected: null
             });
-        }
+        
         
 
         //remove RECTANGLES
@@ -441,7 +444,7 @@ class EditScreen extends Component {
                     <div className="col s6">
                         <div className="wireframe_container">
                             <div className="diagram" 
-                                onClick={this.handleDeSelect}
+                                onClick={() => this.handleDeSelect()} ///////////////////////
                                 style={{width: this.state.width+"px", height: this.state.height+"px", transform: "scale("+this.state.zoom+")"}}>
                                 {this.renderDiagram()}
                             </div>
