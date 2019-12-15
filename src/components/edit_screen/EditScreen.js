@@ -168,7 +168,7 @@ class EditScreen extends Component {
                 con = {
                     width: 100, // dynamic based on text
                     height: 25,
-                    text: "Prompt for Input", ///////////////////////////////////////////////
+                    text: "Prompt for Input",
                     fontSize: 14,
                     textColor: "black",
                     backgroundColor: "none",
@@ -181,7 +181,7 @@ class EditScreen extends Component {
                 con = {
                     width: 100,
                     height: 25,
-                    text: "Submit", // default text ...
+                    text: "Submit", // default text
                     fontSize: 14,
                     textColor: "black",
                     backgroundColor: "#d6d6d6",
@@ -194,7 +194,7 @@ class EditScreen extends Component {
                 con = {
                     width: 150,
                     height: 25,
-                    text: "Input", // default text ...
+                    text: "Input", // default text
                     fontSize: 14,
                     textColor: "#d1d1d1",
                     backgroundColor: "#ffffff",
@@ -219,14 +219,11 @@ class EditScreen extends Component {
         });
     }
 
-    ////////////////////////////////////////////////////////////////////////// WireframeDisplay
-
-    createControl(control) {
+    /////////////////// WireframeDisplay // <WireframeDisplay controls={this.state.currentWork}/>
+    createStyle = (control) => {
         let type = control.type;
-        let styles;
-
         if(type=="container") { // create container
-            styles = {
+            return {
                 backgroundColor: control.backgroundColor,
                 borderColor: control.borderColor,
                 borderWidth: control.borderWidth,
@@ -236,7 +233,7 @@ class EditScreen extends Component {
             }
         }
         if(type=="label" | type=="textfield") {
-            styles = {
+            return {
                 backgroundColor: control.backgroundColor,
                 borderColor: control.borderColor,
                 borderWidth: control.borderWidth,
@@ -248,7 +245,7 @@ class EditScreen extends Component {
             }
         }
         if(type=="button") {
-            styles = {
+            return {
                 backgroundColor: control.backgroundColor,
                 borderColor: control.borderColor,
                 borderWidth: control.borderWidth,
@@ -260,7 +257,33 @@ class EditScreen extends Component {
                 textAlign: "center",
             }
         }
-        
+
+    }
+
+    createControl(control) {
+        let styles = this.createStyle(control);
+        return (
+            <Rnd
+                bounds="parent"
+                style={styles}
+                scale = {this.state.zoom}
+                default={{
+                    x: control.position[0],
+                    y: control.position[1],
+                    width: control.width,
+                    height: control.height
+                }}
+                
+                disableDragging
+                enableResizing={{top: false, bottom: false, right: false, left: false, topRight: false, topLeft: false, bottomRight: false, bottomLeft: false}}
+                onClick={(e) => this.handleSelect(e, control)}
+            >
+            {control.text}
+            </Rnd>
+        );
+    }
+    createSelectedControl(control) {
+        let styles = this.createStyle(control);
         return (
             <Rnd
                 bounds="parent"
@@ -277,14 +300,14 @@ class EditScreen extends Component {
                     control.width = ref.style.width;
                     control.height= ref.style.height;
                 }}
-                ref={React.createRef()} //////// for rect ////////////////////////////////////
+                resizeHandleComponent={{bottomRight: handle, topLeft: handle, topRight: handle, bottomLeft: handle}}
+                enableResizing={{top: false, bottom: false, right: false, left: false, topRight: true, topLeft: true, bottomRight: true, bottomLeft: true}}
                 onClick={(e) => this.handleSelect(e, control)}
             >
             {control.text}
             </Rnd>
         );
     }
-
     /////////////////////////////////////////////////////////////////////
 
     createDuplicate = () => {
@@ -299,6 +322,18 @@ class EditScreen extends Component {
         });
     }
 
+    deleteSelected = () => {
+        //console.log("Delete: " + this.state.selected);
+        let controlsList = this.state.currentWork;
+        controlsList = controlsList.filter(c => c != this.state.selected);
+
+        this.setState({
+            currentWork: controlsList,
+            selected: null
+        });
+
+    }
+
     handleKeyPress = (event) => { // key pressing input function
         if(event.keyCode === 68 && event.ctrlKey) { //ctrl + d
             if (this.state.selected) {
@@ -308,7 +343,7 @@ class EditScreen extends Component {
             //event.preventDefault();
         } else if(event.keyCode === 46) { // delete
             if (this.state.selected) {
-                //this.handleDelete();
+                this.deleteSelected();
                 event.preventDefault();
             }
             //event.preventDefault();
@@ -330,33 +365,30 @@ class EditScreen extends Component {
             changed: true
         });
         e.stopPropagation();
-        //resizeHandleComponent={bottomRight: handle, topLeft: handle, topRight: handle, bottomLeft: handle};
     }
-
     handleDeSelect = () => {
-        console.log("REE");
             this.setState({
                 selected: null
             });
-        
-        
-
-        //remove RECTANGLES
     }
 
-    ///////////////////////////////////////////////////////////////////////// WireframeDisplay
-
-    renderDiagram() { // <WireframeDisplay controls={this.state.currentWork}/>
+    //////////////////// WireframeDisplay // <WireframeDisplay controls={this.state.currentWork}/>
+    renderDiagram() {
         let diagram = [];
         for(let i=0; i<this.state.currentWork.length; i++) {
-            diagram.push(this.createControl(this.state.currentWork[i]));
+            if (this.state.currentWork[i]===this.state.selected) {
+                diagram.push(this.createSelectedControl(this.state.currentWork[i]));
+            } else {
+                diagram.push(this.createControl(this.state.currentWork[i]));
+            }
+            
         }
         return diagram;
     }
 
-    ////////////////////////////////////////////////////////////////////////////// ControlProperties
-
+    //////////////////// ControlProperties // <ControlProperties control={this.state.selected}/>
     createAttribute(type, value) {
+
         
 
         
@@ -366,14 +398,13 @@ class EditScreen extends Component {
         );
     }
 
-    renderProperties = (selectedControl) => { // <ControlProperties control={this.state.selected}/>
+    renderProperties = (selectedControl) => {
         let attributes = [];
         for(var key in selectedControl) { // copy
             attributes.push(this.createAttribute(key, selectedControl[key]));
         }
         return attributes;
     }
-
     ////////////////////////////////////////////////////////////////////////////////
 
     render() {
