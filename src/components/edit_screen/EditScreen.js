@@ -145,7 +145,6 @@ class EditScreen extends Component {
             | (this.state.widthC==this.state.width && this.state.heightC==this.state.height) ) {
             bool = true;
         }
-        
         this.setState({
             disable: bool
         });
@@ -213,12 +212,10 @@ class EditScreen extends Component {
 
     addControl = (controlProperties) => {
         let controlList = this.state.currentWork;
+        controlList.push(controlProperties);
         this.setState({
             currentWork: controlList,
             changed: true
-        },function(){
-            console.log("Add "+controlProperties.type);
-            controlList.push(controlProperties);
         });
     }
 
@@ -297,11 +294,9 @@ class EditScreen extends Component {
         }
         attributes.position = [attributes.position[0]+100, attributes.position[1]+100];
         this.addControl(attributes);
-        //this.handleSelect(this.state.currentWork[this.state.currentWork.length-1]);
         this.setState({
             selected: this.state.currentWork[this.state.currentWork.length-1]
         });
-
     }
 
     handleKeyPress = (event) => { // key pressing input function
@@ -448,7 +443,7 @@ class EditScreen extends Component {
                     <div className="col s6">
                         <div className="wireframe_container">
                             <div className="diagram" 
-                                onClick={() => this.handleDeSelect()} ///////////////////////
+                                onClick={() => this.handleDeSelect()}
                                 style={{width: this.state.width+"px", height: this.state.height+"px", transform: "scale("+this.state.zoom+")"}}>
                                 {this.renderDiagram()}
                             </div>
