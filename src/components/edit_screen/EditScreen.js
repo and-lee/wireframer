@@ -151,7 +151,6 @@ class EditScreen extends Component {
         });
     }
 
-
     handleAddControl = (type) => {
         let con = {};
         
@@ -222,6 +221,8 @@ class EditScreen extends Component {
             controlList.push(controlProperties);
         });
     }
+
+    ////////////////////////////////////////////////////////////////////////// WireframeDisplay
 
     createControl(control) {
         let type = control.type;
@@ -327,7 +328,6 @@ class EditScreen extends Component {
             selected: componentID,
             changed: true
         });
-        
         //resizeHandleComponent={bottomRight: handle, topLeft: handle, topRight: handle, bottomLeft: handle};
     }
 
@@ -342,7 +342,7 @@ class EditScreen extends Component {
         //remove RECTANGLES
     }
 
-    /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////// WireframeDisplay
 
     renderDiagram() { // <WireframeDisplay controls={this.state.currentWork}/>
         let diagram = [];
@@ -352,15 +352,24 @@ class EditScreen extends Component {
         return diagram;
     }
 
-    //////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////// ControlProperties
 
-    renderProperties = () => { // <ControlProperties control={this.state.selected}/>
-        let properties = [];
-        for(let i=0; i<this.state.selected.length; i++) {
-            properties.push(this.state.selected[i]);
+    createAttribute(type, value) {
+        
+
+        
+        
+        return (
+            <div>{value}</div>
+        );
+    }
+
+    renderProperties = (selectedControl) => { // <ControlProperties control={this.state.selected}/>
+        let attributes = [];
+        for(var key in selectedControl) { // copy
+            attributes.push(this.createAttribute(key, selectedControl[key]));
         }
-        //return properties;
-        console.log(properties);
+        return attributes;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -408,27 +417,23 @@ class EditScreen extends Component {
                         <div>Controls</div>
 
                         <div>
-                            <Button
-                                onClick={() => this.handleAddControl("container")}>
-                            Add Container</Button>
+
+                            <Button onClick={() => this.handleAddControl("container")}>Add Container</Button>
                         </div>
                         
                         <div>
-                            <Button
-                                onClick={() => this.handleAddControl("label")}> 
-                            Add Label</Button>
+
+                            <Button onClick={() => this.handleAddControl("label")}>Add Label</Button>
                         </div>
 
                         <div>
-                            <Button
-                                onClick={() => this.handleAddControl("button")}> 
-                            Add Text Button</Button>
+
+                            <Button onClick={() => this.handleAddControl("button")}>Add Text Button</Button>
                         </div>
 
                         <div>
-                            <Button
-                                onClick={() => this.handleAddControl("textfield")}> 
-                            Add Textfield</Button>
+
+                            <Button onClick={() => this.handleAddControl("textfield")}>Add Textfield</Button>
                         </div>
 
                     </div>
@@ -469,12 +474,7 @@ class EditScreen extends Component {
                         </div>
 
                         <div>Properties</div>
-                            
-
-
-
-
-
+                        <div>{this.renderProperties(this.state.selected)}</div>
 
 
                     </div>
