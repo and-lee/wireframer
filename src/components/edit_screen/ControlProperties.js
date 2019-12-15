@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
-
 class controlProperties extends React.Component {
     state = {
         control: this.props.control, 
@@ -94,7 +93,7 @@ class controlProperties extends React.Component {
 
     render() {
         return (
-            <div key={this.props.controls}>
+            <div>
                 {this.renderDiagram()}
             </div>
         );

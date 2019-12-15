@@ -29,18 +29,13 @@ class EditScreen extends Component {
         width: this.props.wireframe.width,
         height: this.props.wireframe.height,
         zoom: 1,
-
         currentWork: this.props.wireframe.controls,
         showModal: false,
         disable: true,
-
         widthC: this.props.wireframe.width,
         heightC: this.props.wireframe.height,
         changed: false,
-
-
         selected: null,
-
     }
 
     handleChange = (e) => {
@@ -59,7 +54,6 @@ class EditScreen extends Component {
 
     updateChange = (e) => {
         const { target } = e;
-        
         if (target.id == "completed") {
             this.setState(state => ({
                 ...state,
@@ -124,7 +118,6 @@ class EditScreen extends Component {
         this.handleSave();
         this.handleCancel();
     }
-
     handleCancel = () => {
         this.hideModal();
         this.props.history.push("/");
@@ -152,7 +145,6 @@ class EditScreen extends Component {
 
     handleAddControl = (type) => {
         let con = {};
-        
         switch(type) {
             case "container":
                 con = {
@@ -298,8 +290,19 @@ class EditScreen extends Component {
                 }}
                 size={{ width: control.width,  height: control.height }}
                 position={{ x: control.position[0], y: control.position[1]}}
-                onDragStop={(e, d) => { control.position=[d.x,d.y] }} // changed: check state change
+                onDragStop={(e, d) => { 
+                    if(control.position[0]!=d.x | control.position[1]!=d.y){
+                        this.setState({
+                            changed: true
+                        });
+                    }
+                    control.position=[d.x,d.y] }} // changed: check state change
                 onResizeStop={(e, direction, ref, delta, position) => { // changed: check state change
+                    if(control.width!=ref.style.width | control.height!=ref.style.height){
+                        this.setState({
+                            changed: true
+                        });
+                    }
                     control.width = ref.style.width;
                     control.height= ref.style.height;
                 }}
@@ -321,7 +324,8 @@ class EditScreen extends Component {
         attributes.position = [attributes.position[0]+100, attributes.position[1]+100];
         this.addControl(attributes);
         this.setState({
-            selected: this.state.currentWork[this.state.currentWork.length-1]
+            selected: this.state.currentWork[this.state.currentWork.length-1],
+            changed: true
         });
     }
 
@@ -332,7 +336,8 @@ class EditScreen extends Component {
 
         this.setState({
             currentWork: controlsList,
-            selected: null
+            selected: null,
+            changed: true
         });
 
     }
@@ -365,14 +370,14 @@ class EditScreen extends Component {
         console.log(componentID);
         this.setState({
             selected: componentID,
-            changed: true
+            //changed: true
         });
         e.stopPropagation();
     }
     handleDeSelect = () => {
-            this.setState({
-                selected: null
-            });
+        this.setState({
+            selected: null
+        });
     }
 
     //////////////////// WireframeDisplay // <WireframeDisplay controls={this.state.currentWork}/>
@@ -384,7 +389,6 @@ class EditScreen extends Component {
             } else {
                 diagram.push(this.createControl(this.state.currentWork[i]));
             }
-            
         }
         return diagram;
     }
