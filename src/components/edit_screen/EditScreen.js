@@ -135,11 +135,11 @@ class EditScreen extends Component {
         console.log("Add "+type);
         let addControl = this.state.currentWork;
         let con ={};
+        //con {type: type}
         
         switch(type) {
             case "container":
                 con = {
-                    key: 0,
                     type: "container",
                     width: 250,
                     height: 250,
@@ -150,16 +150,57 @@ class EditScreen extends Component {
                     borderRadius: 2
                 };
             break;
-
-
-
-
-
+            case "label":
+                con = {
+                    type: "label",
+                    width: 250,
+                    height: 250,
+                    position: [0,0],
+                    text: "Prompt for Input", ///////////////////////////////////////////////
+                    fontSize: 14,
+                    textColor: "black",
+                    backgroundColor: "none",
+                    borderColor: "#000000",
+                    borderWeight: 0,
+                    borderRadius: 0
+                };
+            break;
+            case "button":
+                con = {
+                    type: "button",
+                    width: 100,
+                    height: 25,
+                    position: [0,0],
+                    text: "Submit", // default text ...
+                    fontSize: 14,
+                    textColor: "black",
+                    backgroundColor: "#d6d6d6",
+                    borderColor: "#000000",
+                    borderWeight: 1,
+                    borderRadius: 2
+                };
+            break;
+            case "textfield":
+                con = {
+                    type: "textfield",
+                    width: 150,
+                    height: 25,
+                    position: [0,0],
+                    text: "Input", // default text ...
+                    fontSize: 14,
+                    textColor: "black",
+                    backgroundColor: "#ffffff",
+                    borderColor: "#000000",
+                    borderWeight: 1,
+                    borderRadius: 2
+                };
+            break;
         }
 
         addControl.push(con);
         this.setState({
-            currentWork: addControl
+            currentWork: addControl,
+            changed: true
         });
     }
 

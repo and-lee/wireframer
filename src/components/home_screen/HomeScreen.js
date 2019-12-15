@@ -8,30 +8,11 @@ import { getFirestore } from 'redux-firestore';
 
 class HomeScreen extends Component {
 
-    /*newKey() {
-        const fireStore = getFirestore();
-        
-        let test = this.props.wireframes;
-
-        fireStore.collection("wireframes").get().then(function(querySnapshot) {
-            let test = querySnapshot;
-            console.log(test);
-            let len = (querySnapshot.size);
-            for(let i=0; i<len; i++) {
-                if(test.docs.find(function(frame){return frame.key==i})==null) {
-                    return i;
-                }
-            }
-            return len;
-        });
-    }*/
-
     handleNewList = () => {
         let time = new Date().getTime();
 
         const fireStore = getFirestore();
         fireStore.collection('wireframes').add({
-            //key: this.newKey(),
             name: "",
             owner: this.props.auth.uid, // current user.id
             height: 500,

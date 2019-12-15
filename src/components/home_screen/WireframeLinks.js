@@ -14,7 +14,7 @@ class WireframeLinks extends React.Component {
         return (
             <div className="todo-lists section"> 
                 {wireframes && wireframes.filter(frame => frame.owner == user).map(wireframe => (
-                    <WireframeCard wireframe={wireframe} key={wireframe.id} />
+                    <WireframeCard wireframe={wireframe} />
                 ))}
             </div>
         );
