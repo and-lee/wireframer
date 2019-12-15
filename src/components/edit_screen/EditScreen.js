@@ -268,6 +268,7 @@ class EditScreen extends Component {
             <Rnd
                 bounds="parent"
                 style={styles}
+                scale = {this.state.zoom}
                 default={{
                     x: control.position[0],
                     y: control.position[1],
@@ -295,7 +296,6 @@ class EditScreen extends Component {
             attributes[key] = this.state.selected[key];
         }
         attributes.position = [attributes.position[0]+100, attributes.position[1]+100];
-
         this.addControl(attributes);
         //this.handleSelect(this.state.currentWork[this.state.currentWork.length-1]);
         this.setState({
@@ -308,11 +308,15 @@ class EditScreen extends Component {
         if(event.keyCode === 68 && event.ctrlKey) { //ctrl + d
             if (this.state.selected) {
                 this.createDuplicate();
+                event.preventDefault();
             }
-            event.preventDefault();
+            //event.preventDefault();
         } else if(event.keyCode === 46) { // delete
-            //this.handleDelete();
-             event.preventDefault();
+            if (this.state.selected) {
+                //this.handleDelete();
+                event.preventDefault();
+            }
+            //event.preventDefault();
         }
         
     }
