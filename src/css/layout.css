@@ -128,3 +128,46 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 .nums {
   width: 25%!important;
 }
+.container_control {
+  width: 150px;
+  height: 75px;
+  background-color: #ffffff;
+  border-color: #000000;
+  border: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  margin: auto;
+}
+.button_control {
+  width: 100px;
+  height: 25px;
+  font-size: 14px;
+  color: #000000;
+  background-color: #d6d6d6;
+  border: solid;
+  border-color: #000000;
+  border-width: 1px;
+  border-radius: 2px;
+  margin: auto;
+  text-align: center;
+}
+.textfield_control {
+  width: 150px;
+  height: 25px;
+  font-size: 14px;
+  color: #d1d1d1;
+  background-color: #ffffff;
+  border: solid;
+  border-color: #000000;
+  border-width: 1px;
+  border-radius: 2px;
+  margin: auto;
+}
+.control_button {
+  text-align: center;
+  margin: 10px;
+}
+.controls_container{
+  display: grid;
+  row-gap: 50px;
+}

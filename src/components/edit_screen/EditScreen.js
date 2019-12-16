@@ -158,10 +158,9 @@ class EditScreen extends Component {
                 con = {
                     width: 100, // dynamic based on text
                     height: 25,
-                    text: "Prompt for Input",
+                    text: "Prompt for Input:",
                     fontSize: 14,
                     textColor: "#000000",
-                    backgroundColor: null,
                     borderColor: "#000000",
                     borderWidth: 0,
                     borderRadius: 0 };
@@ -218,7 +217,18 @@ class EditScreen extends Component {
                 //z-index
             }
         }
-        if(type=="label" | type=="textfield") {
+        if(type=="label") {
+            return {
+                borderColor: control.borderColor,
+                borderWidth: control.borderWidth+"px",
+                borderRadius: control.borderRadius+"px",
+                borderStyle: "solid",
+                //z-index
+                fontSize: control.fontSize+"px",
+                color: control.textColor,
+            }
+        }
+        if(type=="textfield") {
             return {
                 backgroundColor: control.backgroundColor,
                 borderColor: control.borderColor,
@@ -408,23 +418,26 @@ class EditScreen extends Component {
                                 Update</Button>
                             </div>
                         </div>
-                        <div>Controls</div>
-                        <div>
-                            <div></div>
-                            <Button onClick={() => this.handleAddControl("container")}>Add Container</Button>
+
+                        <h5>Controls</h5>
+                        <div className="controls_container">   
+                            <div>
+                                <div className="container_control"></div>
+                                <div className="control_button"><Button onClick={() => this.handleAddControl("container")}>Add Container</Button></div>
+                            </div>
+                            <div>
+                                <div className="control_button"><h6>Prompt for Input:</h6><Button onClick={() => this.handleAddControl("label")}>Add Label</Button></div>
+                            </div>
+                            <div>
+                                <div className="button_control">Submit</div>
+                                <div className="control_button"><Button onClick={() => this.handleAddControl("button")}>Add Text Button</Button></div>
+                            </div>
+                            <div>
+                                <div className="textfield_control">Input</div>
+                                <div className="control_button"><Button onClick={() => this.handleAddControl("textfield")}>Add Textfield</Button></div>
+                            </div> 
                         </div>
-                        <div>
-                            <div></div>
-                            <Button onClick={() => this.handleAddControl("label")}>Add Label</Button>
-                        </div>
-                        <div>
-                            <div></div>
-                            <Button onClick={() => this.handleAddControl("button")}>Add Text Button</Button>
-                        </div>
-                        <div>
-                            <div></div>
-                            <Button onClick={() => this.handleAddControl("textfield")}>Add Textfield</Button>
-                        </div>
+                        
                     </div>
 
                     <div className="col s6">
@@ -461,7 +474,7 @@ class EditScreen extends Component {
                             </div>
 
                         </div>
-                        <div>Properties</div>
+                        <h5>Properties</h5>
                         { this.state.selected ? 
                         <div>
                             {this.state.selected.type=="textfield" | this.state.selected.type=="button" | this.state.selected.type=="label" ?
@@ -476,16 +489,16 @@ class EditScreen extends Component {
                                         <input className="nums" type="number" name="fontSize" id="fontSize" onChange={(e) => this.handleChange(e)} value={this.state.selected.fontSize} />
                                 </div>
                             
-                                <div> Text Color
+                                <h6> Text Color
                                         <input type="color" name="textColor" id="textColor" onChange={(e) => this.handleChange(e)} value={this.state.selected.textColor} />
-                                </div> </div> : <></>}
+                                </h6> </div> : <></>}
 
-                            <div> Background Color
+                            <h6> Background Color
                                     <input type="color" name="backgroundColor" id="backgroundColor" onChange={(e) => this.handleChange(e)} value={this.state.selected.backgroundColor} />
-                            </div>
-                            <div> Border Color
+                            </h6>
+                            <h6> Border Color
                                     <input type="color" name="borderColor" id="borderColor" onChange={(e) => this.handleChange(e)} value={this.state.selected.borderColor} />
-                            </div>
+                            </h6>
                             <div className="input-field">
                                         <label className="active">Border Width</label>
                                         <input className="nums" type="number" name="borderWidth" id="borderWidth" onChange={(e) => this.handleChange(e)} value={this.state.selected.borderWidth} />
