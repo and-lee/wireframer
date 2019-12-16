@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux';
 import testJson from './TestWireframeData.json'
 import { getFirestore } from 'redux-firestore';
+import { compose } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { Redirect } from 'react-router-dom'
 
 class DatabaseTester extends React.Component {
 
@@ -37,7 +40,21 @@ class DatabaseTester extends React.Component {
         });
     }
 
+    isAdmin = () => {
+        if (this.props.users) {
+            console.log(this.props.users);
+            for(let i =0; i<this.props.users.length; i++) {
+                if((this.props.users[i]["admin"]==true) && (this.props.auth.uid==this.props.users[i]["id"])) {
+                    return true;
+                }
+            }
+        }
+    }
+
     render() {
+        if ( !(this.props.auth && this.isAdmin()) ) { // user is not an Admin
+            return <Redirect to="/" />; // get outta here
+        }
         return (
             <div>
                 <button onClick={this.handleClear}>Clear Database</button>
@@ -48,9 +65,15 @@ class DatabaseTester extends React.Component {
 
 const mapStateToProps = function (state) {
     return {
+        users: state.firestore.ordered.users,
         auth: state.firebase.auth,
         firebase: state.firebase
     };
 }
 
-export default connect(mapStateToProps)(DatabaseTester);
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect([
+        { collection: "users" },
+    ]),
+)(DatabaseTester);
