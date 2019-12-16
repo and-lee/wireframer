@@ -5,26 +5,34 @@ import { firestoreConnect } from 'react-redux-firebase';
 //import { PhotoshopPicker } from 'react-color';
 
 class controlProperties extends React.Component {
+    
     state = {
-
+        text: null,
+        fontSize: null,
+        textColor: null,
+        backgroundColor: null,
+        borderWidth: null,
+        borderRadius: null,
     }
 
     handleChange = (e) => {
         const { target } = e;
-
-        /*this.setState(state => ({
+        
+        this.setState(state => ({
             ...state,
             [target.id]: target.value,
-        }));
+        }),function(){
+            console.log(target.value);
+            this.props.control[target.id] = target.value;
+        });
 
-        // update database
-        this.props.firestore.collection("todoLists").doc(this.props.todoList.id).update( {
-            [target.id] : target.value
-        });*/
+
         /*if(target.id =="fontSize") {
             this.props.control[target.id] = target.value+"px";
         }*/
-        this.props.control[target.id] = target.value;
+        
+        //console.log(target.value);
+        console.log(this.props.control);
     }
 
 
@@ -66,7 +74,7 @@ class controlProperties extends React.Component {
                 
                 <div className="input-field">
                             <label className="active">Border Radius</label>
-                            <input className="nums" type="number" name="borderRadius" id="borderWidth" onChange={(e) => this.handleChange(e)} value={control.borderRadius} />
+                            <input className="nums" type="number" name="borderRadius" id="borderRadius" onChange={(e) => this.handleChange(e)} value={control.borderRadius} />
                 </div>
                 
             </div>

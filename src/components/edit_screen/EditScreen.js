@@ -40,17 +40,14 @@ class EditScreen extends Component {
 
     handleChange = (e) => {
         const { target } = e;
-
-        this.setState(state => ({
-            ...state,
-            [target.id]: target.value,
-        }));
-
-        // update database
-        this.props.firestore.collection("wireframes").doc(this.props.wireframe.id).update( {
-            [target.id] : target.value
+        let temp = this.state.selected;
+        temp[target.id] = target.value;
+        this.setState({
+            selected: temp,
+            changed: true ////////////////////////////////////////////////////////////////////////
         });
-    }
+        
+    } // pass event
 
     updateChange = (e) => {
         const { target } = e;
@@ -162,7 +159,7 @@ class EditScreen extends Component {
                     text: "Prompt for Input",
                     fontSize: 14,
                     textColor: "#000000",
-                    backgroundColor: "",
+                    backgroundColor: null,
                     borderColor: "#000000",
                     borderWidth: 0,
                     borderRadius: 0 };
@@ -213,8 +210,8 @@ class EditScreen extends Component {
             return {
                 backgroundColor: control.backgroundColor,
                 borderColor: control.borderColor,
-                borderWidth: control.borderWidth,
-                borderRadius: control.borderRadius,
+                borderWidth: control.borderWidth+"px",
+                borderRadius: control.borderRadius+"px",
                 borderStyle: "solid",
                 //z-index
             }
@@ -223,11 +220,11 @@ class EditScreen extends Component {
             return {
                 backgroundColor: control.backgroundColor,
                 borderColor: control.borderColor,
-                borderWidth: control.borderWidth,
-                borderRadius: control.borderRadius,
+                borderWidth: control.borderWidth+"px",
+                borderRadius: control.borderRadius+"px",
                 borderStyle: "solid",
                 //z-index
-                fontSize: control.fontSize,
+                fontSize: control.fontSize+"px",
                 color: control.textColor,
             }
         }
@@ -235,11 +232,11 @@ class EditScreen extends Component {
             return {
                 backgroundColor: control.backgroundColor,
                 borderColor: control.borderColor,
-                borderWidth: control.borderWidth,
-                borderRadius: control.borderRadius,
+                borderWidth: control.borderWidth+"px",
+                borderRadius: control.borderRadius+"px",
                 borderStyle: "solid",
                 //z-index
-                fontSize: control.fontSize,
+                fontSize: control.fontSize+"px",
                 color: control.textColor,
                 textAlign: "center",
             }
@@ -275,7 +272,7 @@ class EditScreen extends Component {
             <Rnd
                 bounds="parent"
                 style={styles}
-                scale = {this.state.zoom}
+                //scale = {this.state.zoom}
                 default={{
                     x: control.position[0],
                     y: control.position[1],
@@ -472,7 +469,39 @@ class EditScreen extends Component {
 
                         </div>
                         <div>Properties</div>
-                        <ControlProperties control={this.state.selected}/>
+                        { this.state.selected ? 
+                        <div>
+                            {this.state.selected.type=="textfield" | this.state.selected.type=="button" | this.state.selected.type=="label" ?
+                            <div>
+                                <div className="input-field">
+                                        <label className="active">Text</label>
+                                        <input type="text" name="text" id="text" onChange={(e) => this.handleChange(e)} value={this.state.selected.text} />
+                                </div>
+                            
+                                <div className="input-field">
+                                        <label className="active">Font Size</label>
+                                        <input className="nums" type="number" name="fontSize" id="fontSize" onChange={(e) => this.handleChange(e)} value={this.state.selected.fontSize} />
+                                </div>
+                            
+                                <div> Text Color
+                                        <input type="color" name="textColor" id="textColor" onChange={(e) => this.handleChange(e)} value={this.state.selected.textColor} />
+                                </div> </div> : <></>}
+
+                            <div> Background Color
+                                    <input type="color" name="backgroundColor" id="backgroundColor" onChange={(e) => this.handleChange(e)} value={this.state.selected.backgroundColor} />
+                            </div>
+                            <div> Border Color
+                                    <input type="color" name="borderColor" id="borderColor" onChange={(e) => this.handleChange(e)} value={this.state.selected.borderColor} />
+                            </div>
+                            <div className="input-field">
+                                        <label className="active">Border Width</label>
+                                        <input className="nums" type="number" name="borderWidth" id="borderWidth" onChange={(e) => this.handleChange(e)} value={this.state.selected.borderWidth} />
+                            </div>
+                            
+                            <div className="input-field">
+                                        <label className="active">Border Radius</label>
+                                        <input className="nums" type="number" name="borderRadius" id="borderRadius" onChange={(e) => this.handleChange(e)} value={this.state.selected.borderRadius} />
+                            </div> </div>: <></>}
                     </div>
 
                     <Modal className="delete_modal" header="Close Wireframe"
