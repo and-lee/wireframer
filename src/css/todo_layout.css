@@ -72,11 +72,6 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   margin-bottom: 0!important;
   padding-left: 0!important;
 }
-.fixed-action-btn {
-  position: relative!important;
-  float: right;
-  right: 0!important;
-}
 .card_button {
   color: #424242;
   cursor: pointer;

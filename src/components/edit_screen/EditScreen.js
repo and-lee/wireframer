@@ -94,6 +94,8 @@ class EditScreen extends Component {
     handleZoom = (magnifier) => {
         this.setState({
             zoom: this.state.zoom*magnifier
+        },function(){
+            document.getElementById("diagram").click();
         });
     }
 
@@ -251,11 +253,6 @@ class EditScreen extends Component {
                 bounds="parent"
                 style={styles}
                 scale = {this.state.zoom}
-                default={{
-                    x: control.position[0],
-                    y: control.position[1],
-                    width: control.width,
-                    height: control.height }}
                 size={{ width: control.width,  height: control.height }}
                 position={{ x: control.position[0], y: control.position[1]}}
                 disableDragging
@@ -272,29 +269,25 @@ class EditScreen extends Component {
             <Rnd
                 bounds="parent"
                 style={styles}
-                //scale = {this.state.zoom}
-                default={{
-                    x: control.position[0],
-                    y: control.position[1],
-                    width: control.width,
-                    height: control.height }}
+                scale = {this.state.zoom}
                 size={{ width: control.width,  height: control.height }}
                 position={{ x: control.position[0], y: control.position[1]}}
                 onDragStop={(e, d) => { 
-                    if(control.position[0]!=d.x | control.position[1]!=d.y){
-                        this.setState({
-                            changed: true
-                        });
-                    }
-                    control.position=[d.x,d.y] }} // changed: check state change
+                    control.position=[d.x,d.y] 
+                    this.setState({
+                        changed: true
+                    },function(){
+                        document.getElementById("diagram").click();
+                    }); }} // changed: check state change
                 onResizeStop={(e, direction, ref, delta, position) => { // changed: check state change
-                    if(control.width!=ref.style.width | control.height!=ref.style.height){
-                        this.setState({
-                            changed: true
-                        });
-                    }
+                    control.position=[position.x,position.y];
                     control.width = ref.style.width;
-                    control.height= ref.style.height; }}
+                    control.height= ref.style.height; 
+                    this.setState({
+                        changed: true
+                    },function(){
+                        document.getElementById("diagram").click();
+                    }); }}
                 resizeHandleComponent={{bottomRight: handle, topLeft: handle, topRight: handle, bottomLeft: handle}}
                 enableResizing={{top: false, bottom: false, right: false, left: false, topRight: true, topLeft: true, bottomRight: true, bottomLeft: true}}
                 onClick={(e) => this.handleSelect(e, control)}
@@ -436,7 +429,7 @@ class EditScreen extends Component {
 
                     <div className="col s6">
                         <div className="wireframe_container">
-                            <div className="diagram" 
+                            <div className="diagram" id="diagram"
                                 onClick={() => this.handleDeSelect()}
                                 style={{width: this.state.width+"px", height: this.state.height+"px", transform: "scale("+this.state.zoom+")"}}>
                                 {this.renderDiagram()}
